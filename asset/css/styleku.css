@@ -1,0 +1,25 @@
+.data-pinjaman{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+    border: 1px solid silver;
+    padding: 10px;
+}
+
+.judul-pinjaman{
+    font-weight: bold;
+    position: absolute;
+    top: -13px;
+    z-index: 10;
+    background-color: white;
+    color: orange;
+}
+
+.data-pinjaman table{
+    margin-top: 15px;
+}
+
+.tombol_kirim{
+    margin-top: 40px;
+}
