@@ -279,7 +279,7 @@
 
           <!-- Tombol-tombol -->
           <div class="text-center" style="margin-top:50px">
-            <a href="<?php echo base_url().'inbox_mengetahui' ?>" class="btn btn-danger">
+            <a href="<?php echo base_url().'inbox_menyetujui' ?>" class="btn btn-danger">
                 <i class="fa fa-backward"></i> Kembali
             </a>
 
@@ -303,7 +303,7 @@
 
   <!-- Modal Approve -->
   <div class="modal fade" id="modal-approve">
-    <form action="<?php echo base_url().'inbox_mengetahui/approve' ?>" method="post">
+    <form action="<?php echo base_url().'inbox_menyetujui/approve' ?>" method="post">
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
@@ -314,7 +314,7 @@
         </div>
         <div class="modal-body">
             <input type="text" name="nomor_memo" value="<?php echo $data_memo['nomor_memo'] ?>" hidden>
-            <input type="text" name="status_mengetahui" value="<?php echo $data_memo['status_mengetahui'] ?>" hidden>
+            <input type="text" name="status_menyetujui" value="<?php echo $data_memo['status_menyetujui'] ?>" hidden>
             <input type="text" name="username" value="<?php echo $nama_lengkap; ?>" hidden>
             <input type="text" name="departemen" value="<?php echo $departemen; ?>" hidden>
 

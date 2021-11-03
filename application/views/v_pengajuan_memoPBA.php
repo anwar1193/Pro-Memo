@@ -190,7 +190,7 @@
       <!-- Isi Text 1 -->
       <p>
         <?php echo $data_jenis_memo['jenis_memo_text1'] ?>
-        <input type="text" name="text1" value="<?php echo $data_jenis_memo['jenis_memo_text1'] ?>" hidden>
+        <textarea name="text1" hidden><?php echo $data_jenis_memo['jenis_memo_text1'] ?></textarea>
       </p>
 
       <hr>
@@ -215,7 +215,7 @@
       <!-- Isi Text 2 -->
       <p>
         <?php echo $data_jenis_memo['jenis_memo_text2'] ?>
-        <input type="text" name="text2" value="<?php echo $data_jenis_memo['jenis_memo_text2'] ?>" hidden>
+        <textarea name="text2" hidden><?php echo $data_jenis_memo['jenis_memo_text2'] ?></textarea>
       </p>
 
       <hr>

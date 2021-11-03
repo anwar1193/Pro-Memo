@@ -133,7 +133,7 @@
                 </tbody>
             </table>
 
-            <?php }elseif($data_memo['perihal'] == 'PELEPASAN BPKB LUNAS'){ ?>
+          <?php }elseif($data_memo['perihal'] == 'PELEPASAN BPKB LUNAS'){ ?>
 
             <table class="table table-bordered">
                 <thead>
@@ -170,8 +170,8 @@
                     <?php } ?>
                 </tbody>
             </table>
-
-            <?php }elseif($data_memo['perihal'] == 'PRIORITAS PELEPASAN BPKB'){ ?>
+            
+          <?php }elseif($data_memo['perihal'] == 'PRIORITAS PELEPASAN BPKB'){ ?>
 
             <table class="table table-bordered">
                 <thead>
@@ -207,8 +207,8 @@
                 </tbody>
             </table>
 
-            <?php } ?>
-            <!-- / Data Pinjaman Nasabah -->
+          <?php } ?>
+          <!-- / Data Pinjaman Nasabah -->
 
           <!-- Isi Text-2 -->
           <p style="font-size:18px">
@@ -279,13 +279,9 @@
 
           <!-- Tombol-tombol -->
           <div class="text-center" style="margin-top:50px">
-            <a href="<?php echo base_url().'inbox_mengetahui' ?>" class="btn btn-danger">
+            <a href="<?php echo base_url().'memo_terkirim' ?>" class="btn btn-danger">
                 <i class="fa fa-backward"></i> Kembali
             </a>
-
-            <button class="btn btn-success" data-toggle="modal" data-target="#modal-approve">
-                <i class="fa fa-check"></i> Approve
-            </button>
           </div>
 
   </div>
@@ -303,7 +299,7 @@
 
   <!-- Modal Approve -->
   <div class="modal fade" id="modal-approve">
-    <form action="<?php echo base_url().'inbox_mengetahui/approve' ?>" method="post">
+    <form action="<?php echo base_url().'inbox_menyetujui/approve' ?>" method="post">
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
@@ -314,7 +310,7 @@
         </div>
         <div class="modal-body">
             <input type="text" name="nomor_memo" value="<?php echo $data_memo['nomor_memo'] ?>" hidden>
-            <input type="text" name="status_mengetahui" value="<?php echo $data_memo['status_mengetahui'] ?>" hidden>
+            <input type="text" name="status_menyetujui" value="<?php echo $data_memo['status_menyetujui'] ?>" hidden>
             <input type="text" name="username" value="<?php echo $nama_lengkap; ?>" hidden>
             <input type="text" name="departemen" value="<?php echo $departemen; ?>" hidden>
 

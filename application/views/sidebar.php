@@ -27,7 +27,12 @@
 
             <?php 
               if($cabang == 'HEAD OFFICE'){
-                echo $departemen;
+                if($departemen=='DIREKSI'){
+                  echo $nama_lengkap;
+                }else{
+                  echo $departemen;
+                }
+                
               }else{
                 echo $cabang; 
               }
@@ -52,6 +57,7 @@
           </li>
 
           <!-- MASTER DATA -->
+          <?php if($level=='admin'){ ?>
           <li class="nav-item has-treeview <?= $this->uri->segment(1)=='master_user' || $this->uri->segment(1)=='master_format_memo' ? 'menu-open' : null; ?>">
             <a href="#" class="nav-link <?= $this->uri->segment(1)=='master_user' || $this->uri->segment(1)=='master_format_memo' ? 'active' : null; ?>">
               <i class="nav-icon fa fa-list"></i>
@@ -78,11 +84,21 @@
 
             </ul>
           </li>
+          <?php } ?>
           <!-- / MASTER DATA -->
 
           <li class="nav-item">
             <a href="#" class="nav-link <?= $this->uri->segment(1)=='Pengajuan_memo' ? 'active' : null; ?>" data-toggle="modal" data-target="#modal-ajukanMemo">
               <i class="nav-icon fa fa-list-alt"></i> Ajukan Memo
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="<?php echo base_url().'memo_terkirim' ?>" class="nav-link <?= $this->uri->segment(1)=='memo_terkirim' ? 'active' : null; ?>">
+              <i class="nav-icon fas fa-paper-plane"></i>
+              <p>
+                Memo Terkirim
+              </p>
             </a>
           </li>
 
@@ -98,6 +114,32 @@
                   <?php echo $jumlah_inbox_mengetahui; ?>
                 </span>
 
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="<?php echo base_url().'inbox_menyetujui' ?>" class="nav-link <?= $this->uri->segment(1)=='inbox_menyetujui' ? 'active' : null; ?>">
+              <i class="nav-icon fas fa-envelope"></i>
+              <p>
+                Inbox Menyetujui
+                <?php  
+                  $jumlah_inbox_menyetujui = $this->M_master->tampil_inbox_menyetujui($departemen, $level, $nama_lengkap)->num_rows();
+                ?>
+                <span class="badge badge-danger right">
+                  <?php echo $jumlah_inbox_menyetujui; ?>
+                </span>
+
+              </p>
+            </a>
+          </li>
+
+
+          <li class="nav-item">
+            <a href="<?php echo base_url().'memo_final' ?>" class="nav-link <?= $this->uri->segment(1)=='memo_final' ? 'active' : null; ?>">
+              <i class="nav-icon fas fa-check"></i>
+              <p>
+                Memo (Final)
               </p>
             </a>
           </li>

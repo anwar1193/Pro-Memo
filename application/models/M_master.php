@@ -54,10 +54,30 @@ class M_master extends CI_Model {
         return $result;
     }
 
+    public function tampil_where_memo($tbl, $where){
+        $this->db->order_by('id_memo', 'DESC');
+        $result = $this->db->get_where($tbl, $where);
+        return $result;
+    }
+
     public function tampil_inbox_mengetahui($departemen, $level){
         $result = $this->db->query("SELECT * FROM tbl_memo_mengetahui INNER JOIN tbl_memo USING(nomor_memo) WHERE tbl_memo_mengetahui.departemen_mengetahui='$departemen' AND tbl_memo_mengetahui.jabatan_mengetahui='$level' AND tbl_memo_mengetahui.status='' AND tbl_memo_mengetahui.urutan_mengetahui=tbl_memo.status_mengetahui");
         
         return $result;
     }
+
+    public function tampil_inbox_menyetujui($departemen, $level, $nama_lengkap){
+        $result = $this->db->query("SELECT * FROM tbl_memo_menyetujui INNER JOIN tbl_memo USING(nomor_memo) WHERE tbl_memo_menyetujui.departemen_menyetujui='$departemen' AND tbl_memo_menyetujui.jabatan_menyetujui='$level' AND tbl_memo_menyetujui.username_menyetujui='$nama_lengkap' AND tbl_memo_menyetujui.status='' AND tbl_memo_menyetujui.urutan_menyetujui=tbl_memo.status_menyetujui");
+        
+        return $result;
+    }
+
+    public function tampil_memo_final($departemen){
+        $result = $this->db->query("SELECT * FROM tbl_memo_kepada INNER JOIN tbl_memo_cc USING(nomor_memo) INNER JOIN tbl_memo USING(nomor_memo) WHERE (tbl_memo_kepada.kepada='$departemen' OR tbl_memo_cc.cc='$departemen') AND tbl_memo.status_mengetahui=0 AND tbl_memo.status_menyetujui=0 ORDER BY tbl_memo.id_memo DESC");
+        
+        return $result;
+    }
+
+    
     
 }

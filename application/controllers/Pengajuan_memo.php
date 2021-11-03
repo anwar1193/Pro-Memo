@@ -13,10 +13,20 @@ class Pengajuan_memo extends CI_Controller {
 	public function index()
 	{
 		cek_belum_login();
+		$nama_lengkap = $this->libraryku->tampil_user()->nama_lengkap;
+		$level = $this->libraryku->tampil_user()->level;
+		$cabang = $this->libraryku->tampil_user()->cabang;
+		$departemen = $this->libraryku->tampil_user()->departemen;
+
 		$jenis_memo = $this->input->post('jenis_memo');
 		$data_jenis_memo = $this->M_master->jenis_memo_where(array('jenis_memo_perihal' => $jenis_memo))->row_array();
 		$data_departemen = $this->M_master->tampil_departemen()->result_array();
 		$data_user = $this->M_master->tampil_user()->result_array();
+
+		$data_kacab = $this->M_master->tampil_where('tbl_user', array(
+			'cabang' => $cabang,
+			'level' => 'Branch Manager'
+		))->row_array();
 
 		$this->load->view('header');
 		$this->load->view('sidebar');
@@ -33,7 +43,8 @@ class Pengajuan_memo extends CI_Controller {
 				'jenis_memo' => $jenis_memo,
 				'data_jenis_memo' => $data_jenis_memo,
 				'data_departemen' => $data_departemen,
-				'data_user' => $data_user
+				'data_user' => $data_user,
+				'data_kacab' => $data_kacab
 			));
 		}
 			
