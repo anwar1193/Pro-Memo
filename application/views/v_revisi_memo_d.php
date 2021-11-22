@@ -12,7 +12,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Detail Memo</h1>
+            <h1 class="m-0 text-dark">Detail Memo (Revisi)</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -133,7 +133,7 @@
                 </tbody>
             </table>
 
-            <?php }elseif($data_memo['perihal'] == 'PELEPASAN BPKB LUNAS'){ ?>
+          <?php }elseif($data_memo['perihal'] == 'PELEPASAN BPKB LUNAS'){ ?>
 
             <table class="table table-bordered">
                 <thead>
@@ -170,8 +170,8 @@
                     <?php } ?>
                 </tbody>
             </table>
-
-            <?php }elseif($data_memo['perihal'] == 'PRIORITAS PELEPASAN BPKB'){ ?>
+            
+          <?php }elseif($data_memo['perihal'] == 'PRIORITAS PELEPASAN BPKB'){ ?>
 
             <table class="table table-bordered">
                 <thead>
@@ -207,8 +207,8 @@
                 </tbody>
             </table>
 
-            <?php } ?>
-            <!-- / Data Pinjaman Nasabah -->
+          <?php } ?>
+          <!-- / Data Pinjaman Nasabah -->
 
           <!-- Isi Text-2 -->
           <p style="font-size:18px">
@@ -229,21 +229,39 @@
                           <td class="text-center">
                             <?php  
                                 foreach($data_mengetahui as $row_mengetahui){
+                                    
                                     if($row_mengetahui['status'] == 'done'){
-                                        echo $row_mengetahui['username_mengetahui'].'&nbsp; <span style="background-color:green; color:white; padding:2px; border-radius:50%"><i class="fa fa-check"></i></span> 
-                                        
+                                        echo $row_mengetahui['username_mengetahui'].'&nbsp; 
+                                        <span style="background-color:green; color:white; padding:2px; border-radius:50%"><i class="fa fa-check"></i></span> 
+
                                         <a href="#" data-toggle="modal" data-target="#modal-note" id="pilih_note"
                                             data-note="'.$row_mengetahui['note_mengetahui'].'"
                                             data-username="'.$row_mengetahui['username_mengetahui'].'"
                                             data-jabatan="'.$row_mengetahui['jabatan_mengetahui'].'"
                                         >
                                         <span style="font-size:22px; color:black"><i class="fa fa-comments"></i></span>
-                                        </a>
+                                        </a> 
+
+                                        <br> ('.$row_mengetahui['jabatan_mengetahui'].' - '.$row_mengetahui['departemen_mengetahui'].')';
+
+                                    }elseif($row_mengetahui['status'] == 'revisi'){
+                                        echo $row_mengetahui['username_mengetahui'].'&nbsp; 
+                                        <span style="background-color:orange; color:white; padding:2px; border-radius:50%"><i class="fas fa-allergies"></i></span> 
+
+                                        <a href="#" data-toggle="modal" data-target="#modal-note" id="pilih_note"
+                                            data-note="'.$row_mengetahui['note_mengetahui'].'"
+                                            data-username="'.$row_mengetahui['username_mengetahui'].'"
+                                            data-jabatan="'.$row_mengetahui['jabatan_mengetahui'].'"
+                                        >
+                                        <span style="font-size:22px; color:black"><i class="fa fa-comments"></i></span>
+                                        </a> 
 
                                         <br> ('.$row_mengetahui['jabatan_mengetahui'].' - '.$row_mengetahui['departemen_mengetahui'].')';
 
                                     }else{
-                                        echo $row_mengetahui['username_mengetahui'].'&nbsp; <span style="background-color:blue; color:white; padding:2px; border-radius:50%"><i class="fa fa-clock"></i></span> <br> ('.$row_mengetahui['jabatan_mengetahui'].' - '.$row_mengetahui['departemen_mengetahui'].')';
+                                        echo $row_mengetahui['username_mengetahui'].'&nbsp; 
+                                        <span style="background-color:blue; color:white; padding:2px; border-radius:50%"><i class="fa fa-clock"></i></span> 
+                                        <br> ('.$row_mengetahui['jabatan_mengetahui'].' - '.$row_mengetahui['departemen_mengetahui'].')';
                                     }
 
                                     echo '<br><br>';
@@ -255,7 +273,8 @@
                             <?php  
                                 foreach($data_menyetujui as $row_menyetujui){
                                     if($row_menyetujui['status'] == 'done'){
-                                        echo $row_menyetujui['username_menyetujui'].'&nbsp; <span style="background-color:green; color:white; padding:2px; border-radius:50%"><i class="fa fa-check"></i></span> 
+                                        echo $row_menyetujui['username_menyetujui'].'&nbsp; 
+                                        <span style="background-color:green; color:white; padding:2px; border-radius:50%"><i class="fa fa-check"></i></span> 
                                         
                                         <a href="#" data-toggle="modal" data-target="#modal-note2" id="pilih_note2"
                                             data-note="'.$row_menyetujui['note_menyetujui'].'"
@@ -298,25 +317,31 @@
                   </li>
 
                   <li>
-                      <span style="background-color:green; color:white; padding:2px; border-radius:50%"><i class="fa fa-check"></i></span>
+                      <span style="background-color:green; color:white; padding:2px; border-radius:50%; margin-top:10px"><i class="fa fa-check"></i></span>
                       = Approved
+                  </li>
+
+                  <li>
+                      <span style="background-color:orange; color:white; padding:2px; border-radius:50%; margin-top:10px"><i class="fas fa-allergies"></i></span>
+                      = Revisi
                   </li>
 
                   <li>
                     <span style="font-size:22px; color:black;"><i class="fa fa-comments"></i></span> = Note Approve (Di Klik)
                   </li>
+                  
               </ul>
           </p>
 
 
           <!-- Tombol-tombol -->
           <div class="text-center" style="margin-top:50px">
-            <a href="<?php echo base_url().'memo_final' ?>" class="btn btn-warning">
+            <a href="<?php echo base_url().'revisi_memo' ?>" class="btn btn-danger">
                 <i class="fa fa-backward"></i> Kembali
             </a>
 
-            <a href="<?php echo base_url().'memo_final/proses_pdf/'.$data_memo['id_memo'] ?>" class="btn btn-danger" target="_blank">
-                <i class="fa fa-file-pdf"></i> Export PDF
+            <a href="<?php echo base_url().'revisi_memo/edit/'.$data_memo['id_memo'] ?>" class="btn btn-success">
+                <i class="fa fa-edit"></i> Perbaiki
             </a>
           </div>
 
@@ -331,41 +356,6 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
-
-  <!-- Modal Approve -->
-  <div class="modal fade" id="modal-approve">
-    <form action="<?php echo base_url().'inbox_menyetujui/approve' ?>" method="post">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title">Approve Pengajuan?</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <input type="text" name="nomor_memo" value="<?php echo $data_memo['nomor_memo'] ?>" hidden>
-            <input type="text" name="status_menyetujui" value="<?php echo $data_memo['status_menyetujui'] ?>" hidden>
-            <input type="text" name="username" value="<?php echo $nama_lengkap; ?>" hidden>
-            <input type="text" name="departemen" value="<?php echo $departemen; ?>" hidden>
-
-            <div class="form-group">
-                <label for="note_approve">Note Approve :</label>
-                <textarea name="note_approve" rows="5" class="form-control" required=""></textarea>
-            </div>
-        </div>
-        <div class="modal-footer justify-content-between">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success btn-sm">Approve</button>
-        </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-    </form>
-    </div>
-  <!-- / Modal Approve -->
 
 
   <!-- Modal Note Mengetahui -->

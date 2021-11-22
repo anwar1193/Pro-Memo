@@ -231,14 +231,14 @@
                                 foreach($data_mengetahui as $row_mengetahui){
                                     if($row_mengetahui['status'] == 'done'){
                                         echo $row_mengetahui['username_mengetahui'].'&nbsp; <span style="background-color:green; color:white; padding:2px; border-radius:50%"><i class="fa fa-check"></i></span> 
-                                        
+
                                         <a href="#" data-toggle="modal" data-target="#modal-note" id="pilih_note"
                                             data-note="'.$row_mengetahui['note_mengetahui'].'"
                                             data-username="'.$row_mengetahui['username_mengetahui'].'"
                                             data-jabatan="'.$row_mengetahui['jabatan_mengetahui'].'"
                                         >
                                         <span style="font-size:22px; color:black"><i class="fa fa-comments"></i></span>
-                                        </a>
+                                        </a> 
 
                                         <br> ('.$row_mengetahui['jabatan_mengetahui'].' - '.$row_mengetahui['departemen_mengetahui'].')';
 
@@ -305,18 +305,15 @@
                   <li>
                     <span style="font-size:22px; color:black;"><i class="fa fa-comments"></i></span> = Note Approve (Di Klik)
                   </li>
+                  
               </ul>
           </p>
 
 
           <!-- Tombol-tombol -->
           <div class="text-center" style="margin-top:50px">
-            <a href="<?php echo base_url().'memo_final' ?>" class="btn btn-warning">
+            <a href="<?php echo base_url().'approved_history_mengetahui' ?>" class="btn btn-danger">
                 <i class="fa fa-backward"></i> Kembali
-            </a>
-
-            <a href="<?php echo base_url().'memo_final/proses_pdf/'.$data_memo['id_memo'] ?>" class="btn btn-danger" target="_blank">
-                <i class="fa fa-file-pdf"></i> Export PDF
             </a>
           </div>
 
@@ -335,7 +332,7 @@
 
   <!-- Modal Approve -->
   <div class="modal fade" id="modal-approve">
-    <form action="<?php echo base_url().'inbox_menyetujui/approve' ?>" method="post">
+    <form action="<?php echo base_url().'inbox_mengetahui/approve' ?>" method="post">
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
@@ -346,7 +343,7 @@
         </div>
         <div class="modal-body">
             <input type="text" name="nomor_memo" value="<?php echo $data_memo['nomor_memo'] ?>" hidden>
-            <input type="text" name="status_menyetujui" value="<?php echo $data_memo['status_menyetujui'] ?>" hidden>
+            <input type="text" name="status_mengetahui" value="<?php echo $data_memo['status_mengetahui'] ?>" hidden>
             <input type="text" name="username" value="<?php echo $nama_lengkap; ?>" hidden>
             <input type="text" name="departemen" value="<?php echo $departemen; ?>" hidden>
 
@@ -366,7 +363,6 @@
     </form>
     </div>
   <!-- / Modal Approve -->
-
 
   <!-- Modal Note Mengetahui -->
   <div class="modal fade" id="modal-note">

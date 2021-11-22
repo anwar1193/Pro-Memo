@@ -70,7 +70,8 @@ class Pengajuan_memo extends CI_Controller {
 			'text2' => $this->input->post('text2'),
 			'dibuat_oleh' => $this->input->post('dibuat_oleh'),
 			'status_mengetahui' => 1,
-			'status_menyetujui' => 0
+			'status_menyetujui' => 0,
+			'note_mengetahui' => $this->input->post('note_mengetahui')
 		));
 
 		if($result > 0){

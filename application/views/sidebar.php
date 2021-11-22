@@ -3,6 +3,12 @@
   $level = $this->libraryku->tampil_user()->level;
   $cabang = $this->libraryku->tampil_user()->cabang;
   $departemen = $this->libraryku->tampil_user()->departemen;
+
+  if($cabang == 'HEAD OFFICE'){
+      $identitas = $departemen;
+  }else{
+      $identitas = $level;
+  }
 ?>
 
 <!-- Main Sidebar Container -->
@@ -87,6 +93,19 @@
           <?php } ?>
           <!-- / MASTER DATA -->
 
+          <!-- Inquiry Memo ALL -->
+          <?php if($level=='admin' || $departemen=='INTERNAL AUDIT'){ ?>
+            <li class="nav-item">
+              <a href="<?php echo base_url().'inquiry_memo_all' ?>" class="nav-link <?= $this->uri->segment(1)=='inquiry_memo_all' ? 'active' : null; ?>">
+                <i class="nav-icon fas fa-list"></i>
+                <p>
+                  Inquiry Memo (All)
+                </p>
+              </a>
+            </li>
+          <?php } ?>
+          <!-- END Inquiry Memo ALL -->
+
           <li class="nav-item">
             <a href="#" class="nav-link <?= $this->uri->segment(1)=='Pengajuan_memo' ? 'active' : null; ?>" data-toggle="modal" data-target="#modal-ajukanMemo">
               <i class="nav-icon fa fa-list-alt"></i> Ajukan Memo
@@ -103,12 +122,27 @@
           </li>
 
           <li class="nav-item">
+            <a href="<?php echo base_url().'revisi_memo' ?>" class="nav-link <?= $this->uri->segment(1)=='revisi_memo' ? 'active' : null; ?>">
+              <i class="nav-icon fas fa-allergies"></i>
+              <p>
+                Revisi Memo
+                <?php  
+                  $jumlah_memo_revisi = $this->db->query("SELECT * FROM tbl_memo WHERE cabang='$cabang' AND bagian='$identitas' AND status_mengetahui=-1")->num_rows();
+                ?>
+                <span class="badge badge-warning right">
+                  <?php echo $jumlah_memo_revisi; ?>
+                </span>
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a href="<?php echo base_url().'inbox_mengetahui' ?>" class="nav-link <?= $this->uri->segment(1)=='inbox_mengetahui' ? 'active' : null; ?>">
               <i class="nav-icon fas fa-envelope"></i>
               <p>
                 Inbox Mengetahui
                 <?php  
-                  $jumlah_inbox_mengetahui = $this->M_master->tampil_inbox_mengetahui($departemen, $level)->num_rows();
+                  $jumlah_inbox_mengetahui = $this->M_master->tampil_inbox_mengetahui($departemen, $level, $nama_lengkap)->num_rows();
                 ?>
                 <span class="badge badge-success right">
                   <?php echo $jumlah_inbox_mengetahui; ?>
@@ -139,10 +173,36 @@
             <a href="<?php echo base_url().'memo_final' ?>" class="nav-link <?= $this->uri->segment(1)=='memo_final' ? 'active' : null; ?>">
               <i class="nav-icon fas fa-check"></i>
               <p>
-                Memo (Final)
+                Memo (Ditujukan Ke Saya)
               </p>
             </a>
           </li>
+
+
+          <li class="nav-item has-treeview <?= $this->uri->segment(1)=='approved_history_mengetahui' || $this->uri->segment(1)=='approved_history_menyetujui' ? 'menu-open' : null; ?>">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-list-ol"></i>
+              <p>
+                Approved History
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo base_url().'approved_history_mengetahui' ?>" class="nav-link <?= $this->uri->segment(1)=='approved_history_mengetahui' ? 'active' : null; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Mengetahui</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo base_url().'approved_history_menyetujui' ?>" class="nav-link <?= $this->uri->segment(1)=='approved_history_menyetujui' ? 'active' : null; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Menyetujui</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
           
           
           <li class="nav-header">USER</li>

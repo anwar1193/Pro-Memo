@@ -12,7 +12,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Data Memo Masuk (Mengetahui)</h1>
+            <h1 class="m-0 text-dark">Data History Approved (Mengetahui)</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -30,7 +30,7 @@
       <div class="container-fluid">
         
       <div class="card">
-              <div class="card-header">
+              <!-- <div class="card-header">
                 <form action="<?php echo base_url().'inbox_mengetahui/index_cari' ?>" method="post">
                   <i class="fa fa-search"></i> Cari Memo :
                   <input type="text" name="nopin" placeholder="Masukkan Nopin" autocomplete="off" required>
@@ -44,7 +44,7 @@
 
                   <button class="btn btn-success btn-sm" type="submit">Cari</button>
                 </form>
-              </div>
+              </div> -->
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
@@ -75,8 +75,8 @@
                     <td><?php echo $row['bagian']; ?></td>
                     <td><?php echo $row['perihal']; ?></td>
                     <td class="text-center">
-                        <a href="<?php echo base_url().'inbox_mengetahui/detail/'.$row['id_memo'] ?>" class="btn btn-success btn-sm">
-                            <i class="fa fa-check"></i> Proses Memo
+                        <a href="<?php echo base_url().'approved_history_mengetahui/detail/'.$row['id_memo'] ?>" class="btn btn-success btn-sm">
+                            <i class="fa fa-eye"></i> Detail
                         </a>
                     </td>
                   </tr>

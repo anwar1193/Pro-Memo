@@ -12,7 +12,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Data Memo (Final)</h1>
+            <h1 class="m-0 text-dark">Data Memo (Ditujukan Ke Saya)</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -28,13 +28,24 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        
-      <div class="card">
-              <div class="card-header">
-                
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
+
+      <!-- TAB -->
+      <div class="card card-warning card-tabs">
+        <div class="card-header p-0 pt-1">
+          <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Memo Final</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Memo On Proccess</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="custom-tabs-one-tabContent">
+            
+            <!-- Tab Memo Final -->
+            <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
                 <table id="example1" class="table table-bordered table-striped">
                   
                   <thead>
@@ -73,10 +84,85 @@
                   </tbody>
                   
                 </table>
-              </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
+            <!-- End Tab Memo Final -->
+
+            <!-- Tab Memo On Proccess -->
+            <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+                
+                <table id="example1" class="table table-bordered table-striped">
+                  
+                  <thead>
+                  <tr>
+                    <th>NO</th>
+                    <th>Nomor Memo</th>
+                    <th>Tanggal Memo</th>
+                    <th>Cabang</th>
+                    <th>Bagian</th>
+                    <th>Perihal</th>
+                    <th>Sts.Mengetahui</th>
+                    <th>Sts.Menyetujui</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                  </thead>
+
+                  <tbody>
+
+                  <?php  
+                    $no=1;
+                    foreach($data_memo_proses as $row){
+                  ?>
+                  <tr>
+                    <td><?php echo $no++; ?></td>
+                    <td><?php echo $row['nomor_memo']; ?></td>
+                    <td><?php echo date('d-m-Y', strtotime($row['tanggal'])); ?></td>
+                    <td><?php echo $row['cabang']; ?></td>
+                    <td><?php echo $row['bagian']; ?></td>
+                    <td><?php echo $row['perihal']; ?></td>
+
+                    <td class="text-center">
+                        <?php if($row['status_mengetahui'] == 0){ ?>
+                            <span style="background-color: green; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                Done
+                            </span>
+                        <?php }else{ ?>
+                            <span style="background-color: blue; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                On Proccess
+                            </span>
+                        <?php } ?>
+                    </td>
+
+                    <td class="text-center">
+                        <?php if($row['status_mengetahui'] == 0 && $row['status_menyetujui'] == 0){ ?>
+                            <span style="background-color: green; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                Done
+                            </span>
+                        <?php }else{ ?>
+                            <span style="background-color: blue; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                On Proccess
+                            </span>
+                        <?php } ?>
+                    </td>
+
+                    <td class="text-center">
+                        <a href="<?php echo base_url().'memo_final/detail/'.$row['id_memo'] ?>" class="btn btn-warning btn-sm">
+                            <i class="fa fa-eye"></i> Detail Memo
+                        </a>
+                    </td>
+                  </tr>
+                  <?php } ?>
+
+                  </tbody>
+                  
+                </table>
+
+            </div>
+            <!-- End Tab Memo On Proccess -->
+
+          </div>
+        </div>
+        <!-- /.card -->
+      <!-- / TAB -->
         
       </div><!--/. container-fluid -->
     </section>

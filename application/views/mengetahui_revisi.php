@@ -3,11 +3,10 @@
 <label for="">Mengetahui</label>
 
 <!-- Mengetahui jika yang ajukan KANTOR PUSAT -->
-<?php if($cabang == 'HEAD OFFICE'){ ?>
-
 <div style="margin-bottom:10px">
     Jumlah Mengetahui :
     <select name="jumlah_mengetahui" id="jumlah_mengetahui">
+        <option value="<?php echo $jumlah_mengetahui ?>"><?php echo $jumlah_mengetahui ?> Orang</option>
         <option value="1">1 Orang</option>
         <option value="2">2 Orang</option>
         <option value="3">3 Orang</option>
@@ -32,15 +31,18 @@
     </thead>
 
     <tbody>
-        <!-- Mengetahui 1 -->
-        <tr id="mengetahui1">
-        <td>1</td>
+        <!-- Mengetahui n -->
+        <?php 
+            foreach($data_mengetahui as $row){
+        ?>
+        <tr id="mengetahui<?php echo $row['urutan_mengetahui'] ?>">
+        <td><?php echo $row['urutan_mengetahui'] ?></td>
 
         <td>
             <div class="form-group input-group">
-            <input type="text" name="departemen_mengetahui[]" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiDepartemen'] ?>" class="form-control" required id="mengetahui_departemen1" readonly style="background-color:white">
+            <input type="text" name="departemen_mengetahui[]" value="<?php echo $row['departemen_mengetahui'] ?>" class="form-control" required id="mengetahui_departemen<?php echo $row['urutan_mengetahui'] ?>" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui1">
+                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui<?php echo $row['urutan_mengetahui'] ?>">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -48,13 +50,13 @@
         </td>
 
         <td>
-            <input type="text" class="form-control" name="jabatan_mengetahui[]" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiJabatan'] ?>" id="mengetahui_jabatan1" readonly style="background-color:white">
+            <input type="text" class="form-control" name="jabatan_mengetahui[]" value="<?php echo $row['jabatan_mengetahui'] ?>" id="mengetahui_jabatan<?php echo $row['urutan_mengetahui'] ?>" readonly style="background-color:white">
         </td>
 
         <td>
-            <input type="text" class="form-control" name="username_mengetahui[]" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiUsername'] ?>" id="mengetahui_username1" readonly style="background-color:white">
+            <input type="text" class="form-control" name="username_mengetahui[]" value="<?php echo $row['username_mengetahui'] ?>" id="mengetahui_username<?php echo $row['urutan_mengetahui'] ?>" readonly style="background-color:white">
 
-            <input type="text" name="urutan_mengetahui[]" value="1" hidden>
+            <input type="text" name="urutan_mengetahui[]" value="<?php echo $row['urutan_mengetahui'] ?>" hidden>
         </td>
 
         <!-- <td style="text-align:center">
@@ -62,18 +64,19 @@
         </td> -->
 
         </tr>
-        <!-- / Mengetahui 1............................................................................................ -->
+        <?php } ?>
+        <!-- / Mengetahui n............................................................................................ -->
 
 
-        <!-- Mengetahui 2 -->
-        <tr id="mengetahui2">
-        <td>2</td>
+        <!-- Mengetahui n+1 -->
+        <tr id="mengetahui<?php echo $jumlah_mengetahui+1 ?>">
+        <td><?php echo $jumlah_mengetahui+1 ?></td>
 
         <td>
             <div class="form-group input-group">
-            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen2" readonly style="background-color:white">
+            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen<?php echo $jumlah_mengetahui+1 ?>" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui2">
+                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui<?php echo $jumlah_mengetahui+1 ?>">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -81,12 +84,12 @@
         </td>
 
         <td>
-            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan2" readonly style="background-color:white">
+            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan<?php echo $jumlah_mengetahui+1 ?>" readonly style="background-color:white">
         </td>
 
         <td>
-            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username2" readonly style="background-color:white">
-            <input type="text" name="urutan_mengetahui[]" value="2" hidden>
+            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username<?php echo $jumlah_mengetahui+1 ?>" readonly style="background-color:white">
+            <input type="text" name="urutan_mengetahui[]" value="<?php echo $jumlah_mengetahui+1 ?>" hidden>
         </td>
 
         
@@ -96,18 +99,18 @@
         </td> -->
 
         </tr>
-        <!-- / Mengetahui 2 ......................................................................................... -->
+        <!-- / Mengetahui n+1 ......................................................................................... -->
 
 
-        <!-- Mengetahui 3 -->
-        <tr id="mengetahui3">
-        <td>3</td>
+        <!-- Mengetahui n+2 -->
+        <tr id="mengetahui<?php echo $jumlah_mengetahui+2 ?>">
+        <td><?php echo $jumlah_mengetahui+2 ?></td>
 
         <td>
             <div class="form-group input-group">
-            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen3" readonly style="background-color:white">
+            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen<?php echo $jumlah_mengetahui+2 ?>" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui3">
+                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui<?php echo $jumlah_mengetahui+2 ?>">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -115,12 +118,12 @@
         </td>
 
         <td>
-            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan3" readonly style="background-color:white">
+            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan<?php echo $jumlah_mengetahui+2 ?>" readonly style="background-color:white">
         </td>
 
         <td>
-            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username3" readonly style="background-color:white">
-            <input type="text" name="urutan_mengetahui[]" value="3" hidden>
+            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username<?php echo $jumlah_mengetahui+2 ?>" readonly style="background-color:white">
+            <input type="text" name="urutan_mengetahui[]" value="<?php echo $jumlah_mengetahui+2 ?>" hidden>
         </td>
 
         <!-- <td style="text-align:center">
@@ -128,18 +131,18 @@
         </td> -->
 
         </tr>
-        <!-- / Mengetahui 3 ......................................................................................... -->
+        <!-- / Mengetahui n+2 ......................................................................................... -->
 
 
-        <!-- Mengetahui 4 -->
-        <tr id="mengetahui4">
-        <td>4</td>
+        <!-- Mengetahui n+3 -->
+        <tr id="mengetahui<?php echo $jumlah_mengetahui+3 ?>">
+        <td><?php echo $jumlah_mengetahui+3 ?></td>
 
         <td>
             <div class="form-group input-group">
-            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen4" readonly style="background-color:white">
+            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen<?php echo $jumlah_mengetahui+3 ?>" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui4">
+                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui<?php echo $jumlah_mengetahui+3 ?>">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -147,12 +150,12 @@
         </td>
 
         <td>
-            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan4" readonly style="background-color:white">
+            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan<?php echo $jumlah_mengetahui+3 ?>" readonly style="background-color:white">
         </td>
 
         <td>
-            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username4" readonly style="background-color:white">
-            <input type="text" name="urutan_mengetahui[]" value="4" hidden>
+            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username<?php echo $jumlah_mengetahui+3 ?>" readonly style="background-color:white">
+            <input type="text" name="urutan_mengetahui[]" value="<?php echo $jumlah_mengetahui+3 ?>" hidden>
         </td>
 
         <!-- <td style="text-align:center">
@@ -160,176 +163,12 @@
         </td> -->
 
         </tr>
-        <!-- / Mengetahui 4 ......................................................................................... -->
+        <!-- / Mengetahui n+3 ......................................................................................... -->
 
     </tbody>
 
 </table>
-<?php }else{ ?>
 <!-- / Mengetahui jika yang ajukan KANTOR PUSAT -->
-
-
-<!-- Mengetahui jika yang ajukan KANTOR CABANG -->
-<div style="margin-bottom:10px">
-    Jumlah Mengetahui :
-    <select name="jumlah_mengetahui" id="jumlah_mengetahui">
-        <option value="2">2 Orang</option>
-        <option value="3">3 Orang</option>
-        <option value="4">4 Orang</option>
-    </select>
-</div>
-
-<table class="table table-bordered">
-
-    <thead>
-        <tr>
-        <td width="5%">NO</td>
-        <td width="25%">Departemen</td>
-        <td width="25%">Jabatan</td>
-        <td width="25%">Username</td>
-        <!-- <th class="text-center" width="20%">
-            <button class="btn btn-primary" id="BarisBaru_dokLPPD">
-                <i class="fa fa-plus"></i>
-            </button>
-        </th> -->
-        </tr>
-    </thead>
-
-    <tbody>
-
-        <!-- Mengetahui 1 -->
-        <tr id="mengetahui1">
-        <td>1</td>
-
-        <td>
-            <div class="form-group input-group">
-            <input type="text" name="departemen_mengetahui[]" value="<?php echo $data_kacab['departemen'] ?>" class="form-control" required id="mengetahui_departemen1" readonly style="background-color:white">
-            <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui1">
-                <i class="fa fa-search"></i>
-                </button>
-            </span>
-            </div>
-        </td>
-
-        <td>
-            <input type="text" class="form-control" name="jabatan_mengetahui[]" value="<?php echo $data_kacab['level'] ?>" id="mengetahui_jabatan1" readonly style="background-color:white">
-        </td>
-
-        <td>
-            <input type="text" class="form-control" name="username_mengetahui[]" value="<?php echo $data_kacab['nama_lengkap'] ?>" id="mengetahui_username1" readonly style="background-color:white">
-
-            <input type="text" name="urutan_mengetahui[]" value="1" hidden>
-        </td>
-
-        <!-- <td style="text-align:center">
-            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-        </td> -->
-
-        </tr>
-        <!-- / Mengetahui 2............................................................................................ -->
-
-        <!-- Mengetahui 2 -->
-        <tr id="mengetahui2">
-        <td>2</td>
-
-        <td>
-            <div class="form-group input-group">
-            <input type="text" name="departemen_mengetahui[]" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiDepartemen'] ?>" class="form-control" required id="mengetahui_departemen2" readonly style="background-color:white">
-            <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui2">
-                <i class="fa fa-search"></i>
-                </button>
-            </span>
-            </div>
-        </td>
-
-        <td>
-            <input type="text" class="form-control" name="jabatan_mengetahui[]" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiJabatan'] ?>" id="mengetahui_jabatan2" readonly style="background-color:white">
-        </td>
-
-        <td>
-            <input type="text" class="form-control" name="username_mengetahui[]" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiUsername'] ?>" id="mengetahui_username2" readonly style="background-color:white">
-
-            <input type="text" name="urutan_mengetahui[]" value="2" hidden>
-        </td>
-
-        <!-- <td style="text-align:center">
-            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-        </td> -->
-
-        </tr>
-        <!-- / Mengetahui 2............................................................................................ -->
-
-
-        <!-- Mengetahui 3 -->
-        <tr id="mengetahui3">
-        <td>3</td>
-
-        <td>
-            <div class="form-group input-group">
-            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen3" readonly style="background-color:white">
-            <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui3">
-                <i class="fa fa-search"></i>
-                </button>
-            </span>
-            </div>
-        </td>
-
-        <td>
-            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan3" readonly style="background-color:white">
-        </td>
-
-        <td>
-            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username3" readonly style="background-color:white">
-            <input type="text" name="urutan_mengetahui[]" value="3" hidden>
-        </td>
-
-        <!-- <td style="text-align:center">
-            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-        </td> -->
-
-        </tr>
-        <!-- / Mengetahui 3 ......................................................................................... -->
-
-
-        <!-- Mengetahui 4 -->
-        <tr id="mengetahui4">
-        <td>4</td>
-
-        <td>
-            <div class="form-group input-group">
-            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen4" readonly style="background-color:white">
-            <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui4">
-                <i class="fa fa-search"></i>
-                </button>
-            </span>
-            </div>
-        </td>
-
-        <td>
-            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan4" readonly style="background-color:white">
-        </td>
-
-        <td>
-            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username4" readonly style="background-color:white">
-            <input type="text" name="urutan_mengetahui[]" value="4" hidden>
-        </td>
-
-        <!-- <td style="text-align:center">
-            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-        </td> -->
-
-        </tr>
-        <!-- / Mengetahui 4 ......................................................................................... -->
-
-    </tbody>
-
-</table>
-<?php } ?>
-<!-- Mengetahui jika yang ajukan KANTOR CABANG -->
 
 </div>
 <!-- / Mengetahui ...................................................................-->
@@ -571,27 +410,14 @@
 <!-- /.modal Mengetahui 4 -->
 
 
-<!-- Pengaturan default yang tampil jika kantor pusat / kantor cabang -->
-<?php if($cabang == 'HEAD OFFICE'){ ?>
-
-    <script>
-        $(document).ready(function(){
-            $('#mengetahui2').hide();
-            $('#mengetahui3').hide();
-            $('#mengetahui4').hide();
-        });
-    </script>
-
-<?php }else{ ?>
-
-    <script>
-        $(document).ready(function(){
-            $('#mengetahui3').hide();
-            $('#mengetahui4').hide();
-        });
-    </script>
-
-<?php } ?>
+<!-- Pengaturan default yang tampil -->
+<script>
+    $(document).ready(function(){
+        $('#mengetahui<?php echo $jumlah_mengetahui+1 ?>').hide();
+        $('#mengetahui<?php echo $jumlah_mengetahui+2 ?>').hide();
+        $('#mengetahui<?php echo $jumlah_mengetahui+3 ?>').hide();
+    });
+</script>
 
 <script>
 $(document).ready(function(){

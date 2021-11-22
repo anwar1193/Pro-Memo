@@ -238,7 +238,7 @@
                                             data-jabatan="'.$row_mengetahui['jabatan_mengetahui'].'"
                                         >
                                         <span style="font-size:22px; color:black"><i class="fa fa-comments"></i></span>
-                                        </a>
+                                        </a> 
 
                                         <br> ('.$row_mengetahui['jabatan_mengetahui'].' - '.$row_mengetahui['departemen_mengetahui'].')';
 
@@ -305,18 +305,15 @@
                   <li>
                     <span style="font-size:22px; color:black;"><i class="fa fa-comments"></i></span> = Note Approve (Di Klik)
                   </li>
+
               </ul>
           </p>
 
 
           <!-- Tombol-tombol -->
           <div class="text-center" style="margin-top:50px">
-            <a href="<?php echo base_url().'memo_final' ?>" class="btn btn-warning">
+            <a href="<?php echo base_url().'approved_history_menyetujui' ?>" class="btn btn-danger">
                 <i class="fa fa-backward"></i> Kembali
-            </a>
-
-            <a href="<?php echo base_url().'memo_final/proses_pdf/'.$data_memo['id_memo'] ?>" class="btn btn-danger" target="_blank">
-                <i class="fa fa-file-pdf"></i> Export PDF
             </a>
           </div>
 
@@ -366,7 +363,6 @@
     </form>
     </div>
   <!-- / Modal Approve -->
-
 
   <!-- Modal Note Mengetahui -->
   <div class="modal fade" id="modal-note">

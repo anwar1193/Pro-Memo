@@ -1,4 +1,4 @@
-  <?php  
+<?php  
     date_default_timezone_set("Asia/Jakarta");
     $nama_lengkap = $this->libraryku->tampil_user()->nama_lengkap;
     $level = $this->libraryku->tampil_user()->level;
@@ -12,7 +12,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Halaman Pengajuan Memo</h1>
+            <h1 class="m-0 text-dark">Halaman Revisi Memo</h1>
             <input type="text" value="<?php echo $nama_lengkap ?>" id="user_pengaju" hidden>
 
           </div><!-- /.col -->
@@ -37,13 +37,13 @@
             
           <div class="col-sm-8 offset-2" style="border:1px dashed gray; padding: 10px;">
     
-    <h3 style="text-align: center;">MEMO <?php echo $jenis_memo ?></h3>
+    <h3 style="text-align: center;">REVISI MEMO <?php echo $jenis_memo ?></h3>
 
 
       <hr style="border-width: 0.5px; width: 100%; border-color: silver; border-style: dashed;">
 
       <!-- Form Kirim Laporan (Utama) -->
-      <form method="post" enctype="multipart/form-data" action="<?php echo base_url().'pengajuan_memo/kirim_laporan' ?>">
+      <form method="post" enctype="multipart/form-data" action="<?php echo base_url().'revisi_memo/update' ?>">
 
       <!-- Nomor Memo .....................................................................-->
       <div class="form-group">
@@ -56,7 +56,9 @@
                   <td width="10%" style="text-align: center;">:</td>
 
                   <td width="50%">
-                      <input type="text" class="form-control" name="nomor_memo" autocomplete="off" autofocus required="">
+                      <input type="text" class="form-control" name="nomor_memo" autocomplete="off" required="" value="<?php echo $data_memo['nomor_memo'] ?>">
+
+                      <input type="text" name="id_memo" value="<?php echo $data_memo['id_memo'] ?>" hidden>
                   </td>
               </tr>
           </table>
@@ -75,15 +77,19 @@
 
                   <td width="37%">
                       <select name="kepada[]" class="form-control" required="">
-                        <option value="<?php echo $data_jenis_memo['jenis_memo_kepada'] ?>">
-                          <?php echo $data_jenis_memo['jenis_memo_kepada'] ?>
+                        
+                        <?php foreach($data_memo_kepada as $row){ ?>
+                        <option value="<?php echo $row['kepada'] ?>">
+                          <?php echo $row['kepada'] ?>
                         </option>
+                        <?php } ?>
 
                         <?php foreach($data_departemen as $row_departemen){ ?>
                         <option value="<?php echo $row_departemen['nama_departemen'] ?>">
                           <?php echo $row_departemen['nama_departemen'] ?>
                         </option>
                         <?php } ?>
+
                       </select>
                   </td>
 
@@ -109,9 +115,11 @@
 
                   <td width="37%">
                       <select name="cc[]" class="form-control" required="">
-                        <option value="<?php echo $data_jenis_memo['jenis_memo_cc'] ?>">
-                          <?php echo $data_jenis_memo['jenis_memo_cc'] ?>
+                        <?php foreach($data_memo_cc as $row){ ?>
+                        <option value="<?php echo $row['cc'] ?>">
+                          <?php echo $row['cc'] ?>
                         </option>
+                        <?php } ?>
 
                         <?php foreach($data_departemen as $row_departemen){ ?>
                         <option value="<?php echo $row_departemen['nama_departemen'] ?>">
@@ -161,7 +169,7 @@
                   <td width="10%" style="text-align: center;">:</td>
 
                   <td width="50%">
-                      <input type="text" class="form-control" name="tanggal" value="<?php echo date('d-m-Y') ?>" readonly style="background-color: white;">
+                      <input type="text" class="form-control" name="tanggal" value="<?php echo date('d-m-Y', strtotime($data_memo['tanggal'])) ?>" readonly style="background-color: white;">
                   </td>
               </tr>
           </table>
@@ -180,7 +188,7 @@
                 <td width="10%" style="text-align: center;">:</td>
 
                 <td width="50%">
-                    <input type="text" class="form-control" name="perihal" autocomplete="off" value="<?php echo $data_jenis_memo['jenis_memo_perihal'] ?>">
+                    <input type="text" class="form-control" name="perihal" autocomplete="off" value="<?php echo $data_memo['perihal'] ?>">
                 </td>
             </tr>
         </table>
@@ -200,13 +208,13 @@
       <!-- Data Pinjaman -->
       <?php 
         if($data_jenis_memo['jenis_memo_perihal'] == 'PELEPASAN BPKB AYDA'){
-          require_once('data_pinjaman/1-pelepasan_bpkb_ayda.php'); 
+          require_once('data_pinjaman_revisi/1-pelepasan_bpkb_ayda.php'); 
 
         }elseif($data_jenis_memo['jenis_memo_perihal'] == 'PELEPASAN BPKB LUNAS'){
-          require_once('data_pinjaman/2-pelepasan_bpkb_lunas.php'); 
+          require_once('data_pinjaman_revisi/2-pelepasan_bpkb_lunas.php'); 
 
         }elseif($data_jenis_memo['jenis_memo_perihal'] == 'PRIORITAS PELEPASAN BPKB'){
-          require_once('data_pinjaman/3-prioritas_pelepasan_bpkb.php'); 
+          require_once('data_pinjaman_revisi/3-prioritas_pelepasan_bpkb.php'); 
         }
         
       ?>
@@ -276,10 +284,10 @@
 
 
       <!-- Mengetahui -->
-      <?php require_once('mengetahui.php'); ?>
+      <?php require_once('mengetahui_revisi.php'); ?>
 
       <!-- Menyetujui -->
-      <?php require_once('menyetujui.php'); ?>
+      <?php require_once('menyetujui_revisi.php'); ?>
 
       <!-- Note Mengetahui -->
       Note Mengetahui/Menyetujui (Jika ada perubahan alur/tidak sesuai SOP, silahkan berikan alasannya) :
@@ -287,7 +295,7 @@
 
       <div class="tombol_kirim" style="text-align: center;">
         <button type="submit" class="btn btn-success" id="kirimMemo">
-          <i class="fa fa-send-o"></i> Kirim Memo
+          <i class="fa fa-send-o"></i> Update Memo
         </button>
 
         <a href="<?php echo base_url().'home' ?>" class="btn btn-danger">Batal Memo</a>

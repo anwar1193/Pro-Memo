@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Inbox_mengetahui extends CI_Controller {
+class Approved_history_mengetahui extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
@@ -19,13 +19,12 @@ class Inbox_mengetahui extends CI_Controller {
 
 		cek_belum_login();
 
-        $data_memo = $this->M_master->tampil_inbox_mengetahui($departemen, $level, $nama_lengkap)->result_array();
-        
+        $data_memo = $this->M_master->tampil_inbox_mengetahui_history($departemen, $level, $nama_lengkap)->result_array();
         $jenis_memo = $this->M_master->tampil_data('tbl_jenis_memo')->result_array();
 
 		$this->load->view('header');
 		$this->load->view('sidebar');
-		$this->load->view('v_inbox_mengetahui', array(
+		$this->load->view('v_approved_history_mengetahui', array(
             'data_memo' => $data_memo,
             'jenis_memo' => $jenis_memo
         ));
@@ -37,7 +36,6 @@ class Inbox_mengetahui extends CI_Controller {
         $level = $this->libraryku->tampil_user()->level;
         $departemen = $this->libraryku->tampil_user()->departemen;
         $cabang = $this->libraryku->tampil_user()->cabang;
-        $nama_lengkap = $this->libraryku->tampil_user()->nama_lengkap;
 
         $nopin = $this->input->post('nopin');
         $jenis_memo = $this->M_master->tampil_data('tbl_jenis_memo')->result_array();
@@ -48,13 +46,13 @@ class Inbox_mengetahui extends CI_Controller {
 		cek_belum_login();
 
         if($jenis_memo_cari == 'PELEPASAN BPKB AYDA'){
-            $data_memo = $this->M_master->tampil_memo_nopin_pba($nopin, $departemen, $level, $nama_lengkap)->result_array();
+            $data_memo = $this->M_master->tampil_memo_nopin_pba($nopin, $departemen, $level, $cabang)->result_array();
         }elseif($jenis_memo_cari == 'PELEPASAN BPKB LUNAS'){
-            $data_memo = $this->M_master->tampil_memo_nopin_pbl($nopin, $departemen, $level, $nama_lengkap)->result_array();
+            $data_memo = $this->M_master->tampil_memo_nopin_pbl($nopin, $departemen, $level, $cabang)->result_array();
         }elseif($jenis_memo_cari == 'PRIORITAS PELEPASAN BPKB'){
-            $data_memo = $this->M_master->tampil_memo_nopin_ppb($nopin, $departemen, $level, $nama_lengkap)->result_array();
+            $data_memo = $this->M_master->tampil_memo_nopin_ppb($nopin, $departemen, $level, $cabang)->result_array();
         }else{
-            $data_memo = $this->M_master->tampil_memo_nopin_pba($nopin, $departemen, $level, $nama_lengkap)->result_array();
+            $data_memo = $this->M_master->tampil_memo_nopin_pba($nopin, $departemen, $level, $cabang)->result_array();
         }
 
 		$this->load->view('header');
@@ -81,7 +79,7 @@ class Inbox_mengetahui extends CI_Controller {
 
         $this->load->view('header');
 		$this->load->view('sidebar');
-		$this->load->view('v_inbox_mengetahui_detail', array(
+		$this->load->view('v_approved_history_mengetahui_d', array(
             'data_memo' => $data_memo,
             'data_kepada' => $data_kepada,
             'data_cc' => $data_cc,
@@ -137,41 +135,5 @@ class Inbox_mengetahui extends CI_Controller {
             </script>';
         }
     }
-
-
-    public function revisi(){
-        $note = $this->input->post('note_revisi');
-        $status_mengetahui = $this->input->post('status_mengetahui');
-        $nomor_memo = $this->input->post('nomor_memo');
-        $username = $this->input->post('username');
-        $departemen = $this->input->post('departemen');
-
-        // Cari Sisa Mengetahui
-        $jumlah_mengetahui = $this->M_master->tampil_where('tbl_memo_mengetahui', array('nomor_memo' => $nomor_memo))->num_rows();
-        $sisa_mengetahui = $jumlah_mengetahui - $status_mengetahui;
-
-        // Update tbl_memo_mengetahui
-        $result = $this->M_master->update_data('tbl_memo_mengetahui', array(
-            'status' => 'revisi',
-            'note_mengetahui' => $note
-        ), array(
-            'nomor_memo' => $nomor_memo,
-            'username_mengetahui' => $username,
-            'departemen_mengetahui' => $departemen
-        ));
-
-        if($result>0){
-            // Update tbl_memo
-            $this->M_master->update_data('tbl_memo', array(
-                'status_mengetahui' => -1
-            ), array('nomor_memo' => $nomor_memo));
-            
-
-            echo '<script>
-                alert("Permintaan Revisi Terkirim");window.location="index";
-            </script>';
-        }
-    }
-
 
 }

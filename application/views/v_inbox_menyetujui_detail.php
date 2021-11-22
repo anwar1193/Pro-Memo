@@ -230,7 +230,17 @@
                             <?php  
                                 foreach($data_mengetahui as $row_mengetahui){
                                     if($row_mengetahui['status'] == 'done'){
-                                        echo $row_mengetahui['username_mengetahui'].'&nbsp; <span style="background-color:green; color:white; padding:2px; border-radius:50%"><i class="fa fa-check"></i></span> <br> ('.$row_mengetahui['jabatan_mengetahui'].' - '.$row_mengetahui['departemen_mengetahui'].')';
+                                        echo $row_mengetahui['username_mengetahui'].'&nbsp; <span style="background-color:green; color:white; padding:2px; border-radius:50%"><i class="fa fa-check"></i></span> 
+                                        
+                                        <a href="#" data-toggle="modal" data-target="#modal-note" id="pilih_note"
+                                            data-note="'.$row_mengetahui['note_mengetahui'].'"
+                                            data-username="'.$row_mengetahui['username_mengetahui'].'"
+                                            data-jabatan="'.$row_mengetahui['jabatan_mengetahui'].'"
+                                        >
+                                        <span style="font-size:22px; color:black"><i class="fa fa-comments"></i></span>
+                                        </a> 
+
+                                        <br> ('.$row_mengetahui['jabatan_mengetahui'].' - '.$row_mengetahui['departemen_mengetahui'].')';
 
                                     }else{
                                         echo $row_mengetahui['username_mengetahui'].'&nbsp; <span style="background-color:blue; color:white; padding:2px; border-radius:50%"><i class="fa fa-clock"></i></span> <br> ('.$row_mengetahui['jabatan_mengetahui'].' - '.$row_mengetahui['departemen_mengetahui'].')';
@@ -245,7 +255,17 @@
                             <?php  
                                 foreach($data_menyetujui as $row_menyetujui){
                                     if($row_menyetujui['status'] == 'done'){
-                                        echo $row_menyetujui['username_menyetujui'].'&nbsp; <span style="background-color:green; color:white; padding:2px; border-radius:50%"><i class="fa fa-check"></i></span> <br> ('.$row_menyetujui['jabatan_menyetujui'].')';
+                                        echo $row_menyetujui['username_menyetujui'].'&nbsp; <span style="background-color:green; color:white; padding:2px; border-radius:50%"><i class="fa fa-check"></i></span> 
+                                        
+                                        <a href="#" data-toggle="modal" data-target="#modal-note2" id="pilih_note2"
+                                            data-note="'.$row_menyetujui['note_menyetujui'].'"
+                                            data-username="'.$row_menyetujui['username_menyetujui'].'"
+                                            data-jabatan="'.$row_menyetujui['jabatan_menyetujui'].'"
+                                        >
+                                        <span style="font-size:22px; color:black"><i class="fa fa-comments"></i></span>
+                                        </a> 
+
+                                        <br> ('.$row_menyetujui['jabatan_menyetujui'].')';
                                     }else{
                                         echo $row_menyetujui['username_menyetujui'].'&nbsp; <span style="background-color:blue; color:white; padding:2px; border-radius:50%"><i class="fa fa-clock"></i></span> <br> ('.$row_menyetujui['jabatan_menyetujui'].')';
                                     }
@@ -260,6 +280,14 @@
               </div>
           </div>
 
+          <!-- Note Mengetahui/Menyetujui -->
+          <?php if($data_memo['note_mengetahui'] != ''){ ?>
+          <p style="margin-top:20px">
+              <b>Note Mengetahui/Menyetujui :</b><br>
+              "<?php echo $data_memo['note_mengetahui'] ?>"
+          </p>
+          <?php } ?>
+
           <!-- Note/Keterangan Simbol -->
           <p>
               <b>Keterangan Simbol :</b>
@@ -273,6 +301,11 @@
                       <span style="background-color:green; color:white; padding:2px; border-radius:50%"><i class="fa fa-check"></i></span>
                       = Approved
                   </li>
+
+                  <li>
+                    <span style="font-size:22px; color:black;"><i class="fa fa-comments"></i></span> = Note Approve (Di Klik)
+                  </li>
+
               </ul>
           </p>
 
@@ -334,3 +367,87 @@
     </form>
     </div>
   <!-- / Modal Approve -->
+
+  <!-- Modal Note Mengetahui -->
+  <div class="modal fade" id="modal-note">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="orang">Note</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="note_approve">Note Approve :</label>
+                <span id="note_view"></span>
+            </div>
+
+        </div>
+        <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+    </div>
+  <!-- / Modal Note Mengetahui -->
+
+  <!-- Modal Note Menyetujui -->
+  <div class="modal fade" id="modal-note2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="orang2">Note</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="note_approve">Note Approve :</label>
+                <span id="note_view2"></span>
+            </div>
+
+        </div>
+        <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+    </div>
+  <!-- / Modal Note Menyetujui -->
+
+  <script>
+      $(document).ready(function(){
+
+        $(document).on('click', '#pilih_note', function(){
+
+            var note = $(this).data('note');
+            var orang = $(this).data('username');
+            var jabatan = $(this).data('jabatan');
+
+            $('#note_view').text('"' + note + '"');
+            $('#orang').text(orang + ' (' + jabatan + ')');
+
+        });
+
+        $(document).on('click', '#pilih_note2', function(){
+
+            var note = $(this).data('note');
+            var orang = $(this).data('username');
+            var jabatan = $(this).data('jabatan');
+
+            $('#note_view2').text('"' + note + '"');
+            $('#orang2').text(orang + ' (' + jabatan + ')');
+
+        });
+
+    })
+  </script>

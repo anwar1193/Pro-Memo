@@ -45,6 +45,8 @@
                     <th>Cabang</th>
                     <th>Bagian</th>
                     <th>Perihal</th>
+                    <th>Sts.Mengetahui</th>
+                    <th>Sts.Menyetujui</th>
                     <th class="text-center">Action</th>
                   </tr>
                   </thead>
@@ -62,6 +64,35 @@
                     <td><?php echo $row['cabang']; ?></td>
                     <td><?php echo $row['bagian']; ?></td>
                     <td><?php echo $row['perihal']; ?></td>
+
+                    <td class="text-center">
+                        <?php if($row['status_mengetahui'] == 0){ ?>
+                            <span style="background-color: green; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                Done
+                            </span>
+                        <?php }elseif($row['status_mengetahui'] == -1){ ?>
+                            <span style="background-color: orange; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                Revisi
+                            </span>
+                        <?php }else{ ?>
+                            <span style="background-color: blue; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                On Proccess
+                            </span>
+                        <?php } ?>
+                    </td>
+
+                    <td class="text-center">
+                        <?php if($row['status_mengetahui'] == 0 && $row['status_menyetujui'] == 0){ ?>
+                            <span style="background-color: green; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                Done
+                            </span>
+                        <?php }else{ ?>
+                            <span style="background-color: blue; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                On Proccess
+                            </span>
+                        <?php } ?>
+                    </td>
+                    
                     <td class="text-center">
                         <a href="<?php echo base_url().'memo_terkirim/detail/'.$row['id_memo'] ?>" class="btn btn-warning btn-sm">
                             <i class="fa fa-eye"></i> Detail Memo

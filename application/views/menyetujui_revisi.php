@@ -5,6 +5,7 @@
 <div style="margin-bottom:10px">
     Jumlah Menyetujui :
     <select name="jumlah_menyetujui" id="jumlah_menyetujui">
+        <option value="<?php echo $jumlah_menyetujui ?>"><?php echo $jumlah_menyetujui ?> Orang</option>
         <option value="1">1 Orang</option>
         <option value="2">2 Orang</option>
         <option value="3">3 Orang</option>
@@ -29,15 +30,18 @@
     </thead>
 
     <tbody>
-        <!-- Menyetujui 1 -->
-        <tr id="menyetujui1">
-        <td>1</td>
+        <!-- Menyetujui n -->
+        <?php 
+            foreach($data_menyetujui as $row){
+        ?>
+        <tr id="menyetujui<?php echo $row['urutan_menyetujui'] ?>">
+        <td><?php echo $row['urutan_menyetujui'] ?></td>
 
         <td>
             <div class="form-group input-group">
-            <input type="text" name="departemen_menyetujui[]" value="<?php echo $data_jenis_memo['jenis_memo_menyetujuiDepartemen'] ?>" class="form-control" required id="menyetujui_departemen1" readonly style="background-color:white">
+            <input type="text" name="departemen_menyetujui[]" value="<?php echo $row['departemen_menyetujui'] ?>" class="form-control" required id="menyetujui_departemen<?php echo $row['urutan_menyetujui'] ?>" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-menyetujui1">
+                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-menyetujui<?php echo $row['urutan_menyetujui'] ?>">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -45,12 +49,12 @@
         </td>
 
         <td>
-            <input type="text" class="form-control" name="jabatan_menyetujui[]" value="<?php echo $data_jenis_memo['jenis_memo_menyetujuiJabatan'] ?>" id="menyetujui_jabatan1" readonly style="background-color:white">
+            <input type="text" class="form-control" name="jabatan_menyetujui[]" value="<?php echo $row['jabatan_menyetujui'] ?>" id="menyetujui_jabatan<?php echo $row['urutan_menyetujui'] ?>" readonly style="background-color:white">
         </td>
 
         <td>
-            <input type="text" class="form-control" name="username_menyetujui[]" value="<?php echo $data_jenis_memo['jenis_memo_menyetujuiUsername'] ?>" id="menyetujui_username1" readonly style="background-color:white">
-            <input type="text" name="urutan_menyetujui[]" value="1" hidden>
+            <input type="text" class="form-control" name="username_menyetujui[]" value="<?php echo $row['username_menyetujui'] ?>" id="menyetujui_username<?php echo $row['urutan_menyetujui'] ?>" readonly style="background-color:white">
+            <input type="text" name="urutan_menyetujui[]" value="<?php echo $row['urutan_menyetujui'] ?>" hidden>
         </td>
 
         <!-- <td style="text-align:center">
@@ -58,18 +62,19 @@
         </td> -->
 
         </tr>
-        <!-- / Menyetujui 1............................................................................................ -->
+        <?php } ?>
+        <!-- / Menyetujui n............................................................................................ -->
 
 
-        <!-- Menyetujui 2 -->
-        <tr id="menyetujui2">
-        <td>2</td>
+        <!-- Menyetujui n+1 -->
+        <tr id="menyetujui<?php echo $jumlah_menyetujui+1 ?>">
+        <td><?php echo $jumlah_menyetujui+1 ?></td>
 
         <td>
             <div class="form-group input-group">
-            <input type="text" name="departemen_menyetujui[]" class="form-control" id="menyetujui_departemen2" readonly style="background-color:white">
+            <input type="text" name="departemen_menyetujui[]" class="form-control" id="menyetujui_departemen<?php echo $jumlah_menyetujui+1 ?>" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-menyetujui2">
+                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-menyetujui<?php echo $jumlah_menyetujui+1 ?>">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -77,12 +82,12 @@
         </td>
 
         <td>
-            <input type="text" class="form-control" name="jabatan_menyetujui[]" id="menyetujui_jabatan2" readonly style="background-color:white">
+            <input type="text" class="form-control" name="jabatan_menyetujui[]" id="menyetujui_jabatan<?php echo $jumlah_menyetujui+1 ?>" readonly style="background-color:white">
         </td>
 
         <td>
-            <input type="text" class="form-control" name="username_menyetujui[]" id="menyetujui_username2" readonly style="background-color:white">
-            <input type="text" name="urutan_menyetujui[]" value="2" hidden>
+            <input type="text" class="form-control" name="username_menyetujui[]" id="menyetujui_username<?php echo $jumlah_menyetujui+1 ?>" readonly style="background-color:white">
+            <input type="text" name="urutan_menyetujui[]" value="<?php echo $jumlah_menyetujui+1 ?>" hidden>
         </td>
 
         <!-- <td style="text-align:center">
@@ -90,18 +95,18 @@
         </td> -->
 
         </tr>
-        <!-- / Menyetujui 2 ......................................................................................... -->
+        <!-- / Menyetujui n+1 ......................................................................................... -->
 
 
-        <!-- Menyetujui 3 -->
-        <tr id="menyetujui3">
-        <td>3</td>
+        <!-- Menyetujui n+2 -->
+        <tr id="menyetujui<?php echo $jumlah_menyetujui+2 ?>">
+        <td><?php echo $jumlah_menyetujui+2 ?></td>
 
         <td>
             <div class="form-group input-group">
-            <input type="text" name="departemen_menyetujui[]" class="form-control" id="menyetujui_departemen3" readonly style="background-color:white">
+            <input type="text" name="departemen_menyetujui[]" class="form-control" id="menyetujui_departemen<?php echo $jumlah_menyetujui+2 ?>" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-menyetujui3">
+                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-menyetujui<?php echo $jumlah_menyetujui+2 ?>">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -109,12 +114,12 @@
         </td>
 
         <td>
-            <input type="text" class="form-control" name="jabatan_menyetujui[]" id="menyetujui_jabatan3" readonly style="background-color:white">
+            <input type="text" class="form-control" name="jabatan_menyetujui[]" id="menyetujui_jabatan<?php echo $jumlah_menyetujui+2 ?>" readonly style="background-color:white">
         </td>
 
         <td>
-            <input type="text" class="form-control" name="username_menyetujui[]" id="menyetujui_username3" readonly style="background-color:white">
-            <input type="text" name="urutan_menyetujui[]" value="3" hidden>
+            <input type="text" class="form-control" name="username_menyetujui[]" id="menyetujui_username<?php echo $jumlah_menyetujui+2 ?>" readonly style="background-color:white">
+            <input type="text" name="urutan_menyetujui[]" value="<?php echo $jumlah_menyetujui+2 ?>" hidden>
         </td>
 
         <!-- <td style="text-align:center">
@@ -122,18 +127,18 @@
         </td> -->
 
         </tr>
-        <!-- / Menyetujui 3 ......................................................................................... -->
+        <!-- / Menyetujui n+2 ......................................................................................... -->
 
 
-        <!-- Menyetujui 4 -->
-        <tr id="menyetujui4">
-        <td>4</td>
+        <!-- Menyetujui n+3 -->
+        <tr id="menyetujui<?php echo $jumlah_menyetujui+3 ?>">
+        <td><?php echo $jumlah_menyetujui+3 ?></td>
 
         <td>
             <div class="form-group input-group">
-            <input type="text" name="departemen_menyetujui[]" class="form-control" id="menyetujui_departemen4" readonly style="background-color:white">
+            <input type="text" name="departemen_menyetujui[]" class="form-control" id="menyetujui_departemen<?php echo $jumlah_menyetujui+3 ?>" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-menyetujui4">
+                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-menyetujui<?php echo $jumlah_menyetujui+3 ?>">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -141,12 +146,12 @@
         </td>
 
         <td>
-            <input type="text" class="form-control" name="jabatan_menyetujui[]" id="menyetujui_jabatan4" readonly style="background-color:white">
+            <input type="text" class="form-control" name="jabatan_menyetujui[]" id="menyetujui_jabatan<?php echo $jumlah_menyetujui+3 ?>" readonly style="background-color:white">
         </td>
 
         <td>
-            <input type="text" class="form-control" name="username_menyetujui[]" id="menyetujui_username4" readonly style="background-color:white">
-            <input type="text" name="urutan_menyetujui[]" value="4" hidden>
+            <input type="text" class="form-control" name="username_menyetujui[]" id="menyetujui_username<?php echo $jumlah_menyetujui+3 ?>" readonly style="background-color:white">
+            <input type="text" name="urutan_menyetujui[]" value="<?php echo $jumlah_menyetujui+3 ?>" hidden>
         </td>
 
         <!-- <td style="text-align:center">
@@ -154,7 +159,7 @@
         </td> -->
 
         </tr>
-        <!-- / Menyetujui 4 ......................................................................................... -->
+        <!-- / Menyetujui n+3 ......................................................................................... -->
 
     </tbody>
 
@@ -402,9 +407,9 @@
 <script>
 $(document).ready(function(){
 
-    $('#menyetujui2').hide();
-    $('#menyetujui3').hide();
-    $('#menyetujui4').hide();
+    $('#menyetujui<?php echo $jumlah_menyetujui+1 ?>').hide();
+    $('#menyetujui<?php echo $jumlah_menyetujui+2 ?>').hide();
+    $('#menyetujui<?php echo $jumlah_menyetujui+3 ?>').hide();
 
     // Script Pilihan Jumlah Menyetujui
     $(document).on('change', '#jumlah_menyetujui', function(){
