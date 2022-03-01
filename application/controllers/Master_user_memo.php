@@ -43,7 +43,19 @@ class Master_user_memo extends CI_Controller {
     
     public function simpan(){
 
-		// Simpan Multiple
+        // Cek Apakah User Sudah di daftarkan sebelumnya
+        $user = $this->input->post('user');
+        $cek_user = $this->M_master->tampil_where('tbl_user_memo', array('user' => $user))->num_rows();
+
+        if($cek_user > 0){
+            echo '<script>
+                alert("Maaf user ini telah terdaftar ! Jika ingin menambahkan akses memo pada user ini, silahkan gunakan fitur edit");window.location="index";
+            </script>';
+
+            exit;
+        }
+
+        // Simpan Multiple
         $jenis_memo = $this->input->post('jenis_memo');
 
         for ($i=0; $i<sizeof($jenis_memo); $i++) { 

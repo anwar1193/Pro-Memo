@@ -43,7 +43,7 @@
                   <tr>
                     <th>NO</th>
                     <th>User</th>
-                    <th>Jenis Memo</th>
+                    <th>Akses Memo</th>
                     <th class="text-center">Action</th>
                   </tr>
                   </thead>
