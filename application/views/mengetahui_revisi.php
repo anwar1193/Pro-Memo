@@ -6,7 +6,9 @@
 <div style="margin-bottom:10px">
     Jumlah Mengetahui :
     <select name="jumlah_mengetahui" id="jumlah_mengetahui">
-        <option value="<?php echo $jumlah_mengetahui ?>"><?php echo $jumlah_mengetahui ?> Orang</option>
+        <option value="<?php echo $jumlah_mengetahui ?>">
+            <?php echo $jumlah_mengetahui ?> Orang
+        </option>
         <option value="1">1 Orang</option>
         <option value="2">2 Orang</option>
         <option value="3">3 Orang</option>
@@ -177,7 +179,7 @@
 
 <!-- Modal Mengetahui 1 -->
 <div class="modal fade" id="modal-mengetahui1">
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-xl">
     <div class="modal-content">
     <div class="modal-header">
         <h4 class="modal-title">Pilih Mengetahui</h4>
@@ -193,6 +195,8 @@
                 <th>No</th>
                 <th>Departemen</th>
                 <th>Jabatan</th>
+                <th>Cabang</th>
+                <th>Level</th>
                 <th>Nama Lengkap</th>
                 <th>Pilih</th>
             </tr>
@@ -202,11 +206,16 @@
             <?php 
                 $no=1;
                 foreach($data_user as $row_user){ 
+                    $level_nama = $row_user['level'] ;
+                    $data_level_nilai = $this->M_master->tampil_where('tbl_level', array('level' => $level_nama))->row_array();
+                    $level_angka = $data_level_nilai['level_nilai'];
             ?>
             <tr>
                 <td><?php echo $no++; ?></td>
                 <td><?php echo $row_user['departemen'] ?></td>
                 <td><?php echo $row_user['level'] ?></td>
+                <td><?php echo $row_user['cabang'] ?></td>
+                <td class="text-center"><?php echo $level_angka ?></td>
                 <td><?php echo $row_user['nama_lengkap'] ?></td>
                 <td>
                     <button class="btn btn-info btn-xs" id="pilih-mengetahui1" type="button"
@@ -235,7 +244,7 @@
 
 <!-- Modal Mengetahui 2 -->
 <div class="modal fade" id="modal-mengetahui2">
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-xl">
     <div class="modal-content">
     <div class="modal-header">
         <h4 class="modal-title">Pilih Mengetahui</h4>
@@ -251,6 +260,8 @@
                 <th>No</th>
                 <th>Departemen</th>
                 <th>Jabatan</th>
+                <th>Cabang</th>
+                <th>Level</th>
                 <th>Nama Lengkap</th>
                 <th>Pilih</th>
             </tr>
@@ -260,11 +271,16 @@
             <?php 
                 $no=1;
                 foreach($data_user as $row_user){ 
+                    $level_nama = $row_user['level'] ;
+                    $data_level_nilai = $this->M_master->tampil_where('tbl_level', array('level' => $level_nama))->row_array();
+                    $level_angka = $data_level_nilai['level_nilai'];
             ?>
             <tr>
                 <td><?php echo $no++; ?></td>
                 <td><?php echo $row_user['departemen'] ?></td>
                 <td><?php echo $row_user['level'] ?></td>
+                <td><?php echo $row_user['cabang'] ?></td>
+                <td class="text-center"><?php echo $level_angka; ?></td>
                 <td><?php echo $row_user['nama_lengkap'] ?></td>
                 <td>
                     <button class="btn btn-info btn-xs" id="pilih-mengetahui2" type="button"
@@ -294,7 +310,7 @@
 
 <!-- Modal Mengetahui 3 -->
 <div class="modal fade" id="modal-mengetahui3">
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-xl">
     <div class="modal-content">
     <div class="modal-header">
         <h4 class="modal-title">Pilih Mengetahui</h4>
@@ -310,6 +326,8 @@
                 <th>No</th>
                 <th>Departemen</th>
                 <th>Jabatan</th>
+                <th>Cabang</th>
+                <th>Level</th>
                 <th>Nama Lengkap</th>
                 <th>Pilih</th>
             </tr>
@@ -319,11 +337,16 @@
             <?php 
                 $no=1;
                 foreach($data_user as $row_user){ 
+                    $level_nama = $row_user['level'] ;
+                    $data_level_nilai = $this->M_master->tampil_where('tbl_level', array('level' => $level_nama))->row_array();
+                    $level_angka = $data_level_nilai['level_nilai'];
             ?>
             <tr>
                 <td><?php echo $no++; ?></td>
                 <td><?php echo $row_user['departemen'] ?></td>
                 <td><?php echo $row_user['level'] ?></td>
+                <td><?php echo $row_user['cabang'] ?></td>
+                <td class="text-center"><?php echo $level_angka; ?></td>
                 <td><?php echo $row_user['nama_lengkap'] ?></td>
                 <td>
                     <button class="btn btn-info btn-xs" id="pilih-mengetahui3" type="button"
@@ -353,7 +376,7 @@
 
 <!-- Modal Mengetahui 4 -->
 <div class="modal fade" id="modal-mengetahui4">
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-xl">
     <div class="modal-content">
     <div class="modal-header">
         <h4 class="modal-title">Pilih Mengetahui</h4>
@@ -369,6 +392,8 @@
                 <th>No</th>
                 <th>Departemen</th>
                 <th>Jabatan</th>
+                <th>Cabang</th>
+                <th>Level</th>
                 <th>Nama Lengkap</th>
                 <th>Pilih</th>
             </tr>
@@ -378,11 +403,16 @@
             <?php 
                 $no=1;
                 foreach($data_user as $row_user){ 
+                    $level_nama = $row_user['level'] ;
+                    $data_level_nilai = $this->M_master->tampil_where('tbl_level', array('level' => $level_nama))->row_array();
+                    $level_angka = $data_level_nilai['level_nilai'];
             ?>
             <tr>
                 <td><?php echo $no++; ?></td>
                 <td><?php echo $row_user['departemen'] ?></td>
                 <td><?php echo $row_user['level'] ?></td>
+                <td><?php echo $row_user['cabang'] ?></td>
+                <td><?php echo $level_angka ?></td>
                 <td><?php echo $row_user['nama_lengkap'] ?></td>
                 <td>
                     <button class="btn btn-info btn-xs" id="pilih-mengetahui4" type="button"

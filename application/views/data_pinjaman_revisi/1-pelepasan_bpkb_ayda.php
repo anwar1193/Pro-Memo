@@ -44,7 +44,7 @@
           <td width="25%">
             <div class="form-group">
               <label for="sumber_dana" style="font-weight: normal;">Sumber Dana :</label>
-              <input type="text" name="sumber_dana[]" class="form-control" value="<?php echo $row['sumber_dana'] ?>">
+              <input type="text" name="sumber_dana[]" class="form-control" value="<?= $row['sumber_dana']=='' ? '(Diisi Reviewer)' : $row['sumber_dana'] ?>" readonly>
             </div>
           </td>
 
@@ -64,7 +64,7 @@
     $(document).ready(function(){
 
       $('#tambah_pinjaman').click(function(){
-        $('#data-pinjaman').append('<div class="item_pinjaman"><hr><table width="100%"><tr><td width="25%"><div class="form-group"><label for="nomor_pinjaman" style="font-weight: normal;">Nomor Pinjaman :</label><input type="text" class="form-control" name="nomor_pinjaman[]"></div></td><td width="25%"><div class="form-group"><label for="nama_nasabah" style="font-weight: normal;">Nama Nasabah :</label><input type="text" class="form-control" name="nama_nasabah[]"></div></td><td width="25%"><div class="form-group"><label for="nomor_pinjaman" style="font-weight: normal;">Status Pinjaman :</label><select name="status_pinjaman[]" class="form-control"><option value="AYDA">AYDA</option><option value="WO">WO</option></select></div></td><td width="25%"><div class="form-group"><label for="sumber_dana" style="font-weight: normal;">Sumber Dana :</label><input type="text" name="sumber_dana[]" class="form-control"></div></td></tr></table><div class="form-group"><label for="keterangan">Keterangan :</label><textarea class="form-control" name="keterangan[]" cols="30" rows="5"></textarea></div></div>');
+        $('#data-pinjaman').append('<div class="item_pinjaman"><hr><table width="100%"><tr><td width="25%"><div class="form-group"><label for="nomor_pinjaman" style="font-weight: normal;">Nomor Pinjaman :</label><input type="text" class="form-control" name="nomor_pinjaman[]"></div></td><td width="25%"><div class="form-group"><label for="nama_nasabah" style="font-weight: normal;">Nama Nasabah :</label><input type="text" class="form-control" name="nama_nasabah[]"></div></td><td width="25%"><div class="form-group"><label for="nomor_pinjaman" style="font-weight: normal;">Status Pinjaman :</label><select name="status_pinjaman[]" class="form-control"><option value="AYDA">AYDA</option><option value="WO">WO</option></select></div></td><td width="25%"><div class="form-group"><label for="sumber_dana" style="font-weight: normal;">Sumber Dana :</label><input type="text" name="sumber_dana[]" class="form-control" readonly placeholder="(Diisi Reviewer)"></div></td></tr></table><div class="form-group"><label for="keterangan">Keterangan :</label><textarea class="form-control" name="keterangan[]" cols="30" rows="5"></textarea></div></div>');
       });
 
       $('#hapus_pinjaman').click(function(){

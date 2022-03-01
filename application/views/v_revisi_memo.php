@@ -63,7 +63,10 @@
                     <td><?php echo date('d-m-Y', strtotime($row['tanggal'])); ?></td>
                     <td><?php echo $row['cabang']; ?></td>
                     <td><?php echo $row['bagian']; ?></td>
-                    <td><?php echo $row['perihal']; ?></td>
+                    <td>
+                      <?php echo $row['perihal']; ?>
+                      <?= $row['perihal'] == 'PELEPASAN BPKB AYDA' ? '/ WO' : NULL; ?>
+                    </td>
 
                     <td class="text-center">
                         <?php if($row['status_mengetahui'] == 0){ ?>
@@ -85,6 +88,10 @@
                         <?php if($row['status_mengetahui'] == 0 && $row['status_menyetujui'] == 0){ ?>
                             <span style="background-color: green; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
                                 Done
+                            </span>
+                        <?php }elseif($row['status_mengetahui'] == 0 && $row['status_menyetujui'] == -1){ ?>
+                            <span style="background-color: orange; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                Revisi
                             </span>
                         <?php }else{ ?>
                             <span style="background-color: blue; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">

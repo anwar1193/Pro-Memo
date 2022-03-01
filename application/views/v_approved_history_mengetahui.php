@@ -73,7 +73,10 @@
                     <td><?php echo date('d-m-Y', strtotime($row['tanggal'])); ?></td>
                     <td><?php echo $row['cabang']; ?></td>
                     <td><?php echo $row['bagian']; ?></td>
-                    <td><?php echo $row['perihal']; ?></td>
+                    <td>
+                      <?php echo $row['perihal']; ?>
+                      <?= $row['perihal'] == 'PELEPASAN BPKB AYDA' ? '/ WO' : NULL; ?>
+                    </td>
                     <td class="text-center">
                         <a href="<?php echo base_url().'approved_history_mengetahui/detail/'.$row['id_memo'] ?>" class="btn btn-success btn-sm">
                             <i class="fa fa-eye"></i> Detail

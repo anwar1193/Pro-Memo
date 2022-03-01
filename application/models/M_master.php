@@ -8,6 +8,17 @@ class M_master extends CI_Model {
         return $result;
     }
 
+    public function tampil_data_order($tbl, $order){
+        $this->db->order_by($order);
+        $result = $this->db->get($tbl);
+        return $result;
+    }
+
+    public function tampil_where($tbl, $where){
+        $result = $this->db->get_where($tbl, $where);
+        return $result;
+    }
+
     public function simpan_data($tbl, $data){
         $result = $this->db->insert($tbl, $data);
         return $result;
@@ -24,6 +35,8 @@ class M_master extends CI_Model {
     }
 
     public function jenis_memo(){
+        $this->db->where_not_in('jenis_memo_perihal', 'MEMO GENERAL');
+        $this->db->order_by('jenis_memo_perihal', 'DESC');
         $result = $this->db->get('tbl_jenis_memo');
         return $result;
     }
@@ -51,11 +64,6 @@ class M_master extends CI_Model {
 
     public function tampil_user(){
         $result = $this->db->get('tbl_user');
-        return $result;
-    }
-
-    public function tampil_where($tbl, $where){
-        $result = $this->db->get_where($tbl, $where);
         return $result;
     }
 
@@ -91,6 +99,62 @@ class M_master extends CI_Model {
 
     public function tampil_memo_final($departemen){
         $result = $this->db->query("SELECT * FROM tbl_memo_kepada INNER JOIN tbl_memo_cc USING(nomor_memo) INNER JOIN tbl_memo USING(nomor_memo) WHERE (tbl_memo_kepada.kepada='$departemen' OR tbl_memo_cc.cc='$departemen') AND tbl_memo.status_mengetahui=0 AND tbl_memo.status_menyetujui=0 ORDER BY tbl_memo.id_memo DESC");
+        
+        return $result;
+    }
+
+    public function tampil_memo_final_cari_pba($departemen, $nopin){
+        $result = $this->db->query("SELECT * FROM tbl_memo_kepada 
+            INNER JOIN tbl_memo_cc USING(nomor_memo) 
+            INNER JOIN tbl_memo USING(nomor_memo)
+            INNER JOIN tbl_memo_dapin_pba USING(nomor_memo) 
+            WHERE (tbl_memo_kepada.kepada='$departemen' OR tbl_memo_cc.cc='$departemen') 
+            AND tbl_memo.status_mengetahui=0 
+            AND tbl_memo.status_menyetujui=0 
+            AND tbl_memo_dapin_pba.nomor_pinjaman='$nopin' 
+            ORDER BY tbl_memo.id_memo DESC");
+        
+        return $result;
+    }
+
+    public function tampil_memo_final_cari_pbl($departemen, $nopin){
+        $result = $this->db->query("SELECT * FROM tbl_memo_kepada 
+            INNER JOIN tbl_memo_cc USING(nomor_memo) 
+            INNER JOIN tbl_memo USING(nomor_memo)
+            INNER JOIN tbl_memo_dapin_pbl USING(nomor_memo) 
+            WHERE (tbl_memo_kepada.kepada='$departemen' OR tbl_memo_cc.cc='$departemen') 
+            AND tbl_memo.status_mengetahui=0 
+            AND tbl_memo.status_menyetujui=0 
+            AND tbl_memo_dapin_pbl.nomor_pinjaman='$nopin' 
+            ORDER BY tbl_memo.id_memo DESC");
+        
+        return $result;
+    }
+
+    public function tampil_memo_final_cari_ppb($departemen, $nopin){
+        $result = $this->db->query("SELECT * FROM tbl_memo_kepada 
+            INNER JOIN tbl_memo_cc USING(nomor_memo) 
+            INNER JOIN tbl_memo USING(nomor_memo)
+            INNER JOIN tbl_memo_dapin_ppb USING(nomor_memo) 
+            WHERE (tbl_memo_kepada.kepada='$departemen' OR tbl_memo_cc.cc='$departemen') 
+            AND tbl_memo.status_mengetahui=0 
+            AND tbl_memo.status_menyetujui=0 
+            AND tbl_memo_dapin_ppb.nomor_pinjaman='$nopin' 
+            ORDER BY tbl_memo.id_memo DESC");
+        
+        return $result;
+    }
+
+    public function tampil_memo_final_cari_pmb($departemen, $nopin){
+        $result = $this->db->query("SELECT * FROM tbl_memo_kepada 
+            INNER JOIN tbl_memo_cc USING(nomor_memo) 
+            INNER JOIN tbl_memo USING(nomor_memo)
+            INNER JOIN tbl_memo_dapin_pmb USING(nomor_memo) 
+            WHERE (tbl_memo_kepada.kepada='$departemen' OR tbl_memo_cc.cc='$departemen') 
+            AND tbl_memo.status_mengetahui=0 
+            AND tbl_memo.status_menyetujui=0 
+            AND tbl_memo_dapin_pmb.nomor_pinjaman='$nopin' 
+            ORDER BY tbl_memo.id_memo DESC");
         
         return $result;
     }

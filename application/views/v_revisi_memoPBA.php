@@ -37,7 +37,12 @@
             
           <div class="col-sm-8 offset-2" style="border:1px dashed gray; padding: 10px;">
     
-    <h3 style="text-align: center;">REVISI MEMO <?php echo $jenis_memo ?></h3>
+      <h3 style="text-align: center;">
+        REVISI 
+        <?= $jenis_memo != 'MEMO GENERAL' ? 'MEMO' : NULL ?>
+        <?php echo $jenis_memo ?>
+        <?= $jenis_memo == 'PELEPASAN BPKB AYDA' ? '/ WO' : NULL; ?>
+      </h3>
 
 
       <hr style="border-width: 0.5px; width: 100%; border-color: silver; border-style: dashed;">
@@ -150,7 +155,7 @@
                   <td width="10%" style="text-align: center;">:</td>
 
                   <td width="50%">
-                      <input type="text" class="form-control" name="dari" autocomplete="off" value="<?php echo $level.'-'.$cabang; ?>">
+                      <input type="text" class="form-control" name="dari" autocomplete="off" value="<?php echo $level.'-'.$cabang; ?>" readonly>
                   </td>
               </tr>
           </table>
@@ -169,7 +174,7 @@
                   <td width="10%" style="text-align: center;">:</td>
 
                   <td width="50%">
-                      <input type="text" class="form-control" name="tanggal" value="<?php echo date('d-m-Y', strtotime($data_memo['tanggal'])) ?>" readonly style="background-color: white;">
+                      <input type="text" class="form-control" name="tanggal" value="<?php echo date('d-m-Y', strtotime($data_memo['tanggal'])) ?>" readonly>
                   </td>
               </tr>
           </table>
@@ -188,7 +193,7 @@
                 <td width="10%" style="text-align: center;">:</td>
 
                 <td width="50%">
-                    <input type="text" class="form-control" name="perihal" autocomplete="off" value="<?php echo $data_memo['perihal'] ?>">
+                    <input type="text" class="form-control" name="perihal" autocomplete="off" value="<?php echo $data_memo['perihal'] ?>" readonly>
                 </td>
             </tr>
         </table>
@@ -215,6 +220,12 @@
 
         }elseif($data_jenis_memo['jenis_memo_perihal'] == 'PRIORITAS PELEPASAN BPKB'){
           require_once('data_pinjaman_revisi/3-prioritas_pelepasan_bpkb.php'); 
+
+        }elseif($data_jenis_memo['jenis_memo_perihal'] == 'PEMINJAMAN BPKB'){
+          require_once('data_pinjaman_revisi/4-peminjaman_bpkb.php'); 
+
+        }elseif($data_jenis_memo['jenis_memo_perihal'] == 'MEMO GENERAL'){
+          require_once('data_pinjaman_revisi/5-memo_general.php'); 
         }
         
       ?>
@@ -232,34 +243,23 @@
 
 
       <!-- Form Upload -->
-      <span style="font-weight: bold; font-size: 18px;">Upload Dokumen</span>
+      <span style="font-weight: bold; font-size: 18px;">Upload Dokumen (jpg / png / jpeg / pdf)</span>
       
-      <table class="table table-bordered wy-table-striped" id="tableLoop_dokLPPD">
-          <thead>
-              <tr>
-                  <th>NO</th>
-                  <th>Pilih File</th>
-                  <th>Jenis File</th>
-                  <th class="text-center">
-                      <button class="btn btn-primary btn-sm" id="BarisBaru_dokLPPD" type="button">
-                          <i class="fa fa-plus"></i>
-                      </button>
-                  </th>
-              </tr>
-          </thead>
+      <table class="table table-bordered" id="tableLoop">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Upload File</th>
+            <th>Nama File</th>
+            <th class="text-center">
+              <button class="btn btn-primary btn-xs" id="BarisBaru">
+                <i class="fa fa-plus"></i> Tambah File
+              </button>
+            </th>
+          </tr>
+        </thead>
 
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td><input type="file" class="form-control" name="file"></td>
-              <td><input type="text" class="form-control" name="jenis_file"></td>
-              <td class="text-center">
-                <button class="btn btn-danger btn-sm" type="button">
-                    <i class="fa fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
+        <tbody></tbody>
       </table>
       <!-- / Form Upload -->
 
@@ -275,7 +275,7 @@
                 <td width="10%" style="text-align: center;">:</td>
 
                 <td width="50%">
-                    <input type="text" class="form-control" name="dibuat_oleh" autocomplete="off" value="<?php echo $level.'-'.$cabang; ?>">
+                    <input type="text" class="form-control" name="dibuat_oleh" autocomplete="off" value="<?php echo $level.'-'.$cabang; ?>" readonly>
                 </td>
             </tr>
         </table>
@@ -727,3 +727,69 @@
 
   });
   </script>
+
+
+  <!-- Script Upload Multiple File -->
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+    for(b=1; b<=1; b++){
+      barisBaru();
+    }
+    $('#BarisBaru').click(function(e){
+      e.preventDefault();
+      barisBaru();
+    });
+
+    $("tableLoop tbody").find('input[type=text]').filter(':visible:first').focus();
+  });
+
+  function barisBaru(){
+    $(document).ready(function(){
+      $("[data-toggle='tooltip'").tooltip();
+    });
+
+    var Nomor = $("#tableLoop tbody tr").length + 1;
+    var Baris = '<tr>';
+            Baris += '<td class="text-center">'+Nomor+'</td>';
+
+            Baris += '<td>';
+              Baris += '<input type="file" id="pilih_file" name="files[]" class="form-control" placeholder="Upload File">';
+            Baris += '</td>';
+
+            Baris += '<td>';
+              Baris += '<input type="text" name="nama_file[]" class="form-control" placeholder="Nama File" id="nama_file" autocomplete="off">';
+            Baris += '</td>';
+
+            Baris += '<td class="text-center">';
+              Baris += '<a class="btn btn-sm btn-danger" data-toggle="tooltip" title="Hapus Baris" id="HapusBaris"><i class="fa fa-times"></i></a>';
+            Baris += '</td>';
+        Baris += '</tr>';
+
+    $("#tableLoop tbody").append(Baris);
+    $("#tableLoop tbody tr").each(function(){
+      $(this).find('td:nth-child(2) input').focus();
+    });
+
+  }
+
+  $(document).on('click', '#HapusBaris', function(e){
+    e.preventDefault();
+    var Nomor = 1;
+    $(this).parent().parent().remove();
+    $('tableLoop tbody tr').each(function(){
+      $(this).find('td:nth-child(1)').html(Nomor);
+      Nomor++;
+    });
+  });
+
+
+  // Jika file upload di klik, nama file akan jadi required/wajib
+  $(document).ready(function() {
+    $("#pilih_file").click(function() {
+      $("#nama_file").attr("required","");
+    })
+  });
+
+  </script>
+  <!-- END Script Upload Multiple File -->

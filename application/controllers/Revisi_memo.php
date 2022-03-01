@@ -25,12 +25,13 @@ class Revisi_memo extends CI_Controller {
 
 		cek_belum_login();
 
-        $data_memo = $this->M_master->tampil_where_memo('tbl_memo', array(
-            'cabang' => $cabang,
-            'bagian' => $identitas
-        ))->result_array();
+        // $data_memo = $this->M_master->tampil_where_memo('tbl_memo', array(
+        //     'cabang' => $cabang,
+        //     'bagian' => $identitas
+        // ))->result_array();
 
-        $data_memo = $this->db->query("SELECT * FROM tbl_memo WHERE cabang='$cabang' AND bagian='$identitas' AND status_mengetahui=-1")->result_array();
+        $data_memo = $this->db->query("SELECT * FROM tbl_memo WHERE cabang='$cabang' AND bagian='$identitas' AND status_mengetahui=-1 OR
+											cabang='$cabang' AND bagian='$identitas' AND status_menyetujui=-1")->result_array();
 
 		$this->load->view('header');
 		$this->load->view('sidebar');
@@ -49,7 +50,9 @@ class Revisi_memo extends CI_Controller {
         $data_dapin_pba = $this->M_master->tampil_where('tbl_memo_dapin_pba', array('nomor_memo' => $nomor_memo))->result_array();
         $data_dapin_pbl = $this->M_master->tampil_where('tbl_memo_dapin_pbl', array('nomor_memo' => $nomor_memo))->result_array();
         $data_dapin_ppb = $this->M_master->tampil_where('tbl_memo_dapin_ppb', array('nomor_memo' => $nomor_memo))->result_array();
-        $data_upload = $this->M_master->tampil_where('tbl_memo_upload', array('nomor_memo' => $nomor_memo))->result_array();
+		$data_dapin_pmb = $this->M_master->tampil_where('tbl_memo_dapin_pmb', array('nomor_memo' => $nomor_memo))->result_array();
+		$data_general = $this->M_master->tampil_where('tbl_memo_general', array('nomor_memo' => $nomor_memo))->row_array();
+        $data_upload = $this->M_master->tampil_where('tbl_memo_file', array('nomor_memo' => $nomor_memo))->result_array();
         $data_mengetahui = $this->M_master->tampil_where('tbl_memo_mengetahui', array('nomor_memo' => $nomor_memo))->result_array();
         $data_menyetujui = $this->M_master->tampil_where('tbl_memo_menyetujui', array('nomor_memo' => $nomor_memo))->result_array();
 
@@ -62,6 +65,8 @@ class Revisi_memo extends CI_Controller {
             'data_dapin_pba' => $data_dapin_pba,
             'data_dapin_pbl' => $data_dapin_pbl,
             'data_dapin_ppb' => $data_dapin_ppb,
+            'data_dapin_pmb' => $data_dapin_pmb,
+            'data_general' => $data_general,
             'data_upload' => $data_upload,
             'data_mengetahui' => $data_mengetahui,
             'data_menyetujui' => $data_menyetujui
@@ -89,6 +94,8 @@ class Revisi_memo extends CI_Controller {
         $data_dapin_pba = $this->M_master->tampil_where('tbl_memo_dapin_pba', array('nomor_memo'=>$nomor_memo))->result_array();
         $data_dapin_pbl = $this->M_master->tampil_where('tbl_memo_dapin_pbl', array('nomor_memo'=>$nomor_memo))->result_array();
         $data_dapin_ppb = $this->M_master->tampil_where('tbl_memo_dapin_ppb', array('nomor_memo'=>$nomor_memo))->result_array();
+        $data_dapin_pmb = $this->M_master->tampil_where('tbl_memo_dapin_pmb', array('nomor_memo'=>$nomor_memo))->result_array();
+		$data_general = $this->M_master->tampil_where('tbl_memo_general', array('nomor_memo' => $nomor_memo))->row_array();
 
         // Mengetahui / Menyetujui
         $data_mengetahui = $this->M_master->tampil_where('tbl_memo_mengetahui', array('nomor_memo' => $nomor_memo))->result_array();
@@ -108,42 +115,25 @@ class Revisi_memo extends CI_Controller {
 		$this->load->view('header');
 		$this->load->view('sidebar');
 
-		if($jenis_memo == 'MEMO GENERAL'){
-			$this->load->view('v_pengajuan_memoGeneral', array(
-				'jenis_memo' => $jenis_memo,
-				'data_jenis_memo' => $data_jenis_memo,
-				'data_departemen' => $data_departemen,
-				'data_user' => $data_user,
-				'data_memo' => $data_memo,
-				'data_memo_kepada' => $data_memo_kepada,
-				'data_memo_cc' => $data_memo_cc,
-				'data_dapin_pba' => $data_dapin_pba,
-				'data_dapin_pbl' => $data_dapin_pbl,
-				'data_dapin_ppb' => $data_dapin_ppb,
-				'data_mengetahui' => $data_mengetahui,
-				'data_menyetujui' => $data_menyetujui,
-                'jumlah_mengetahui' => $jumlah_mengetahui,
-				'jumlah_menyetujui' => $jumlah_menyetujui
-			));
-		}else{
-			$this->load->view('v_revisi_memoPBA', array(
-				'jenis_memo' => $jenis_memo,
-				'data_jenis_memo' => $data_jenis_memo,
-				'data_departemen' => $data_departemen,
-				'data_user' => $data_user,
-				'data_kacab' => $data_kacab,
-				'data_memo' => $data_memo,
-				'data_memo_kepada' => $data_memo_kepada,
-				'data_memo_cc' => $data_memo_cc,
-				'data_dapin_pba' => $data_dapin_pba,
-				'data_dapin_pbl' => $data_dapin_pbl,
-				'data_dapin_ppb' => $data_dapin_ppb,
-				'data_mengetahui' => $data_mengetahui,
-				'data_menyetujui' => $data_menyetujui,
-                'jumlah_mengetahui' => $jumlah_mengetahui,
-				'jumlah_menyetujui' => $jumlah_menyetujui
-			));
-		}
+		$this->load->view('v_revisi_memoPBA', array(
+			'jenis_memo' => $jenis_memo,
+			'data_jenis_memo' => $data_jenis_memo,
+			'data_departemen' => $data_departemen,
+			'data_user' => $data_user,
+			'data_kacab' => $data_kacab,
+			'data_memo' => $data_memo,
+			'data_memo_kepada' => $data_memo_kepada,
+			'data_memo_cc' => $data_memo_cc,
+			'data_dapin_pba' => $data_dapin_pba,
+			'data_dapin_pbl' => $data_dapin_pbl,
+			'data_dapin_ppb' => $data_dapin_ppb,
+			'data_dapin_pmb' => $data_dapin_pmb,
+			'data_general' => $data_general,
+			'data_mengetahui' => $data_mengetahui,
+			'data_menyetujui' => $data_menyetujui,
+			'jumlah_mengetahui' => $jumlah_mengetahui,
+			'jumlah_menyetujui' => $jumlah_menyetujui
+		));
 			
 		$this->load->view('footer');
     }
@@ -188,7 +178,7 @@ class Revisi_memo extends CI_Controller {
 			// Simpan CC ---------------------------------------------------------------------------------
             $this->M_master->hapus_data('tbl_memo_cc', array('nomor_memo'=>$nomor_memo));
 			$cc = $this->input->post('cc');
-			for ($i=0; $i < sizeof($kepada) ; $i++) { 
+			for ($i=0; $i < sizeof($cc) ; $i++) { 
 				$this->M_master->simpan_data('tbl_memo_cc', array(
 					'nomor_memo' => $this->input->post('nomor_memo'),
 					'cc' => $cc[$i]
@@ -242,11 +232,34 @@ class Revisi_memo extends CI_Controller {
 						'keterangan' => $this->input->post('keterangan')[$i]
 					));
 				}
+
+			}elseif($perihal == 'PEMINJAMAN BPKB'){
+                $this->M_master->hapus_data('tbl_memo_dapin_pmb', array('nomor_memo'=>$nomor_memo));
+				$nomor_pinjaman = $this->input->post('nomor_pinjaman');
+				for ($i=0; $i < sizeof($nomor_pinjaman) ; $i++) { 
+					$this->M_master->simpan_data('tbl_memo_dapin_pmb', array(
+						'nomor_memo' => $this->input->post('nomor_memo'),
+						'nomor_pinjaman' => $nomor_pinjaman[$i],
+						'nama_nasabah' => $this->input->post('nama_nasabah')[$i],
+						'nomor_polisi' => $this->input->post('nomor_polisi')[$i],
+						'nomor_bpkb' => $this->input->post('nomor_bpkb')[$i],
+						'sumber_dana' => $this->input->post('sumber_dana')[$i],
+						'keperluan' => $this->input->post('keperluan')[$i]
+					));
+				}
+
+			}elseif($perihal == 'MEMO GENERAL'){
+                $this->M_master->hapus_data('tbl_memo_general', array('nomor_memo'=>$nomor_memo));
+				$this->M_master->simpan_data('tbl_memo_general', array(
+					'nomor_memo' => $this->input->post('nomor_memo'),
+					'isi_memo_general' => $this->input->post('isi_memo_general')
+				));
 			}
 
 
 			// Simpan Mengetahui--------------------------------------------------------------------------
             $this->M_master->hapus_data('tbl_memo_mengetahui', array('nomor_memo'=>$nomor_memo));
+			
 			$departemen_mengetahui = $this->input->post('departemen_mengetahui');
 			for ($i=0; $i < sizeof($departemen_mengetahui) ; $i++) { 
 				$this->M_master->simpan_data('tbl_memo_mengetahui', array(
@@ -279,6 +292,52 @@ class Revisi_memo extends CI_Controller {
 
 			// hapus sampah pengajuan hasil looping
 			$this->db->delete('tbl_memo_menyetujui', array('username_menyetujui' => ''));
+
+
+			// Simpan File Memo
+			$folderUpload = "./file_upload/".$tanggal_sekarang;
+
+			# periksa apakah folder tersedia
+			if (!is_dir($folderUpload)) {
+				# jika tidak maka folder harus dibuat terlebih dahulu
+				mkdir($folderUpload, 0777, $rekursif = true);
+			}
+
+			// ref_no diambil untuk nama file nya (pembeda antar pengajuan)
+			$refno = $nomor_memo;
+
+			$data = [];
+			$count = count($_FILES['files']['name']);
+			for($i=0; $i<$count; $i++){
+				if(!empty($_FILES['files']['name'][$i])){
+					$_FILES['file']['name'] = $_FILES['files']['name'][$i];
+					$_FILES['file']['type'] = $_FILES['files']['type'][$i];
+					$_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+					$_FILES['file']['error'] = $_FILES['files']['error'][$i];
+					$_FILES['file']['size'] = $_FILES['files']['size'][$i];
+
+					$config['upload_path'] = $folderUpload;
+					$config['allowed_types'] = 'jpg|png|jpeg|pdf';
+					$config['max_size'] = 0;
+					// $config['file_name'] = $_FILES['files']['name'][$i];
+					$config['file_name'] = date('Y-m-d').'-'.$refno.'-'.substr(md5(rand()),0,5).'-'.$i;
+					// $config['encrypt_name'] = TRUE;
+
+					$this->load->library('upload', $config);
+
+					if($this->upload->do_upload('file')){
+						$uploadData = $this->upload->data();
+						$filename = $uploadData['file_name'];
+						$image[$i] = $filename;
+						$content = [
+							'nomor_memo' => $nomor_memo,
+							'file' => $image[$i],
+							'nama_file' => $this->input->post('nama_file')[$i]
+						];
+						$this->M_master->simpan_data('tbl_memo_file', $content);
+					}
+				}
+			}
 
 
 			// Alert Berhasil

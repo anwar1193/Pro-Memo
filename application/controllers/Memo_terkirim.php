@@ -47,7 +47,9 @@ class Memo_terkirim extends CI_Controller {
         $data_dapin_pba = $this->M_master->tampil_where('tbl_memo_dapin_pba', array('nomor_memo' => $nomor_memo))->result_array();
         $data_dapin_pbl = $this->M_master->tampil_where('tbl_memo_dapin_pbl', array('nomor_memo' => $nomor_memo))->result_array();
         $data_dapin_ppb = $this->M_master->tampil_where('tbl_memo_dapin_ppb', array('nomor_memo' => $nomor_memo))->result_array();
-        $data_upload = $this->M_master->tampil_where('tbl_memo_upload', array('nomor_memo' => $nomor_memo))->result_array();
+        $data_dapin_pmb = $this->M_master->tampil_where('tbl_memo_dapin_pmb', array('nomor_memo' => $nomor_memo))->result_array();
+        $data_general = $this->M_master->tampil_where('tbl_memo_general', array('nomor_memo' => $nomor_memo))->row_array();
+        $data_upload = $this->M_master->tampil_where('tbl_memo_file', array('nomor_memo' => $nomor_memo))->result_array();
         $data_mengetahui = $this->M_master->tampil_where('tbl_memo_mengetahui', array('nomor_memo' => $nomor_memo))->result_array();
         $data_menyetujui = $this->M_master->tampil_where('tbl_memo_menyetujui', array('nomor_memo' => $nomor_memo))->result_array();
 
@@ -60,6 +62,8 @@ class Memo_terkirim extends CI_Controller {
             'data_dapin_pba' => $data_dapin_pba,
             'data_dapin_pbl' => $data_dapin_pbl,
             'data_dapin_ppb' => $data_dapin_ppb,
+            'data_dapin_pmb' => $data_dapin_pmb,
+            'data_general' => $data_general,
             'data_upload' => $data_upload,
             'data_mengetahui' => $data_mengetahui,
             'data_menyetujui' => $data_menyetujui

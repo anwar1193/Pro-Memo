@@ -12,7 +12,9 @@
         <option value="2">2 Orang</option>
         <option value="3">3 Orang</option>
         <option value="4">4 Orang</option>
-    </select>
+    </select> - 
+
+    <b>Keterangan : </b> Urutan <b>Level Jabatan</b> Dari Rendah Ke Tinggi
 </div>
 
 <table class="table table-bordered">
@@ -32,82 +34,22 @@
     </thead>
 
     <tbody>
-        <!-- Mengetahui 1 -->
-        <tr id="mengetahui1">
-        <td>1</td>
-
-        <td>
-            <div class="form-group input-group">
-            <input type="text" name="departemen_mengetahui[]" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiDepartemen'] ?>" class="form-control" required id="mengetahui_departemen1" readonly style="background-color:white">
-            <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui1">
-                <i class="fa fa-search"></i>
-                </button>
-            </span>
-            </div>
-        </td>
-
-        <td>
-            <input type="text" class="form-control" name="jabatan_mengetahui[]" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiJabatan'] ?>" id="mengetahui_jabatan1" readonly style="background-color:white">
-        </td>
-
-        <td>
-            <input type="text" class="form-control" name="username_mengetahui[]" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiUsername'] ?>" id="mengetahui_username1" readonly style="background-color:white">
-
-            <input type="text" name="urutan_mengetahui[]" value="1" hidden>
-        </td>
-
-        <!-- <td style="text-align:center">
-            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-        </td> -->
-
-        </tr>
-        <!-- / Mengetahui 1............................................................................................ -->
-
-
-        <!-- Mengetahui 2 -->
-        <tr id="mengetahui2">
-        <td>2</td>
-
-        <td>
-            <div class="form-group input-group">
-            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen2" readonly style="background-color:white">
-            <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui2">
-                <i class="fa fa-search"></i>
-                </button>
-            </span>
-            </div>
-        </td>
-
-        <td>
-            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan2" readonly style="background-color:white">
-        </td>
-
-        <td>
-            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username2" readonly style="background-color:white">
-            <input type="text" name="urutan_mengetahui[]" value="2" hidden>
-        </td>
-
         
-
-        <!-- <td style="text-align:center">
-            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-        </td> -->
-
-        </tr>
-        <!-- / Mengetahui 2 ......................................................................................... -->
-
-
-        <!-- Mengetahui 3 -->
-        <tr id="mengetahui3">
-        <td>3</td>
+        <!-- Mengetahui n (data master) -->
+        <?php 
+            foreach($data_mengetahui as $row){
+                // Cari Level Jabatan
+                $jbtn = $row['jabatan_mengetahui'];
+                $data_level = $this->db->query("SELECT * FROM tbl_level WHERE level='$jbtn'")->row_array();
+        ?>
+        <tr id="mengetahui<?php echo $row['urutan_mengetahui'] ?>">
+        <td><?php echo $row['urutan_mengetahui'] ?></td>
 
         <td>
             <div class="form-group input-group">
-            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen3" readonly style="background-color:white">
+            <input type="text" name="departemen_mengetahui[]" value="<?php echo $row['departemen_mengetahui'] ?>" class="form-control" required id="mengetahui_departemen<?php echo $row['urutan_mengetahui'] ?>" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui3">
+                <button class="btn btn-info btn-flat ganti-mengetahui" type="button" data-toggle="modal" data-target="#modal-mengetahui<?php echo $row['urutan_mengetahui'] ?>">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -115,12 +57,19 @@
         </td>
 
         <td>
-            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan3" readonly style="background-color:white">
+            <input type="text" class="form-control" name="jabatan_mengetahui[]" value="<?php echo $row['jabatan_mengetahui'] ?>" id="mengetahui_jabatan<?php echo $row['urutan_mengetahui'] ?>" readonly style="background-color:white">
+
+            <span id="level_mengetahui<?php echo $row['urutan_mengetahui'] ?>_v" class="text-success">
+                Level Jabatan : <?php echo $data_level['level_nilai'] ?>
+            </span>
         </td>
 
         <td>
-            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username3" readonly style="background-color:white">
-            <input type="text" name="urutan_mengetahui[]" value="3" hidden>
+            <input type="text" class="form-control" name="username_mengetahui[]" value="<?php echo $row['username_mengetahui'] ?>" id="mengetahui_username<?php echo $row['urutan_mengetahui'] ?>" readonly style="background-color:white">
+
+            <input type="text" name="urutan_mengetahui[]" value="<?php echo $row['urutan_mengetahui'] ?>" hidden>
+
+            <input type="text" id="level_mengetahui<?php echo $row['urutan_mengetahui'] ?>" value="<?php echo $data_level['level_nilai'] ?>" hidden>
         </td>
 
         <!-- <td style="text-align:center">
@@ -128,18 +77,19 @@
         </td> -->
 
         </tr>
-        <!-- / Mengetahui 3 ......................................................................................... -->
+        <?php } ?>
+        <!-- / Mengetahui n................................................. -->
 
 
-        <!-- Mengetahui 4 -->
-        <tr id="mengetahui4">
-        <td>4</td>
+        <!-- Mengetahui n+1 (jumlah data awal + 1) -->
+        <tr id="mengetahui<?php echo $jumlah_mengetahui+1 ?>">
+        <td><?php echo $jumlah_mengetahui+1 ?></td>
 
         <td>
             <div class="form-group input-group">
-            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen4" readonly style="background-color:white">
+            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen<?php echo $jumlah_mengetahui+1 ?>" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui4">
+                <button class="btn btn-info btn-flat ganti-mengetahui" type="button" data-toggle="modal" data-target="#modal-mengetahui<?php echo $jumlah_mengetahui+1 ?>">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -147,20 +97,52 @@
         </td>
 
         <td>
-            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan4" readonly style="background-color:white">
+            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan<?php echo $jumlah_mengetahui+1 ?>" readonly style="background-color:white">
         </td>
 
         <td>
-            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username4" readonly style="background-color:white">
-            <input type="text" name="urutan_mengetahui[]" value="4" hidden>
-        </td>
+            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username<?php echo $jumlah_mengetahui+1 ?>" readonly style="background-color:white">
+            <input type="text" name="urutan_mengetahui[]" value="<?php echo $jumlah_mengetahui+1 ?>" hidden>
+        </td> 
 
         <!-- <td style="text-align:center">
             <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
         </td> -->
 
         </tr>
-        <!-- / Mengetahui 4 ......................................................................................... -->
+        <!-- / Mengetahui  n+1 (jumlah data awal + 1) .............. -->
+
+
+        <!-- Mengetahui n+2 (jumlah data awal + 2) -->
+        <tr id="mengetahui<?php echo $jumlah_mengetahui+2 ?>">
+        <td><?php echo $jumlah_mengetahui+2 ?></td>
+
+        <td>
+            <div class="form-group input-group">
+            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen<?php echo $jumlah_mengetahui+2 ?>" readonly style="background-color:white">
+            <span class="input-group-btn">
+                <button class="btn btn-info btn-flat ganti-mengetahui" type="button" data-toggle="modal" data-target="#modal-mengetahui<?php echo $jumlah_mengetahui+2 ?>">
+                <i class="fa fa-search"></i>
+                </button>
+            </span>
+            </div>
+        </td>
+
+        <td>
+            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan<?php echo $jumlah_mengetahui+2 ?>" readonly style="background-color:white">
+        </td>
+
+        <td>
+            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username<?php echo $jumlah_mengetahui+2 ?>" readonly style="background-color:white">
+            <input type="text" name="urutan_mengetahui[]" value="<?php echo $jumlah_mengetahui+2 ?>" hidden>
+        </td> 
+
+        <!-- <td style="text-align:center">
+            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+        </td> -->
+
+        </tr>
+        <!-- / Mengetahui  n+2 (jumlah data awal + 2) .............. -->
 
     </tbody>
 
@@ -173,10 +155,16 @@
 <div style="margin-bottom:10px">
     Jumlah Mengetahui :
     <select name="jumlah_mengetahui" id="jumlah_mengetahui">
+
+        <option value="<?php echo $jumlah_mengetahui+1 ?>">
+            <?php echo $jumlah_mengetahui+1 ?> Orang
+        </option>
         <option value="2">2 Orang</option>
         <option value="3">3 Orang</option>
         <option value="4">4 Orang</option>
-    </select>
+    </select> - 
+
+    <b>Keterangan : </b> Urutan <b>Level Jabatan</b> Dari Rendah Ke Tinggi
 </div>
 
 <table class="table table-bordered">
@@ -205,7 +193,7 @@
             <div class="form-group input-group">
             <input type="text" name="departemen_mengetahui[]" value="<?php echo $data_kacab['departemen'] ?>" class="form-control" required id="mengetahui_departemen1" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui1">
+                <button class="btn btn-info btn-flat ganti-mengetahui" type="button" data-toggle="modal" data-target="#modal-mengetahui1">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -214,12 +202,16 @@
 
         <td>
             <input type="text" class="form-control" name="jabatan_mengetahui[]" value="<?php echo $data_kacab['level'] ?>" id="mengetahui_jabatan1" readonly style="background-color:white">
+
+            <span id="level_mengetahui1_v" class="text-success">Level Jabatan : 2</span>
         </td>
 
         <td>
             <input type="text" class="form-control" name="username_mengetahui[]" value="<?php echo $data_kacab['nama_lengkap'] ?>" id="mengetahui_username1" readonly style="background-color:white">
 
             <input type="text" name="urutan_mengetahui[]" value="1" hidden>
+
+            <input type="text" id="level_mengetahui1" value="2" hidden>
         </td>
 
         <!-- <td style="text-align:center">
@@ -227,17 +219,98 @@
         </td> -->
 
         </tr>
-        <!-- / Mengetahui 2............................................................................................ -->
+        <!-- / Mengetahui 1.......................................... -->
+
+
+        <!-- Mengetahui n + 1 (data master + kacab) -->
+        <?php 
+            foreach($data_mengetahui as $row){
+                // Cari Level Jabatan
+                $jbtn = $row['jabatan_mengetahui'];
+                $data_level = $this->db->query("SELECT * FROM tbl_level WHERE level='$jbtn'")->row_array();
+        ?>
+        <tr id="mengetahui<?php echo $row['urutan_mengetahui'] + 1 ?>">
+        <td><?php echo $row['urutan_mengetahui'] + 1 ?></td>
+
+        <td>
+            <div class="form-group input-group">
+            <input type="text" name="departemen_mengetahui[]" value="<?php echo $row['departemen_mengetahui'] ?>" class="form-control" required id="mengetahui_departemen<?php echo $row['urutan_mengetahui'] + 1 ?>" readonly style="background-color:white">
+            <span class="input-group-btn">
+                <button class="btn btn-info btn-flat ganti-mengetahui" type="button" data-toggle="modal" data-target="#modal-mengetahui<?php echo $row['urutan_mengetahui'] + 1 ?>">
+                <i class="fa fa-search"></i>
+                </button>
+            </span>
+            </div>
+        </td>
+
+        <td>
+            <input type="text" class="form-control" name="jabatan_mengetahui[]" value="<?php echo $row['jabatan_mengetahui'] ?>" id="mengetahui_jabatan<?php echo $row['urutan_mengetahui'] + 1 ?>" readonly style="background-color:white">
+
+            <span id="level_mengetahui<?php echo $row['urutan_mengetahui'] + 1 ?>_v" class="text-success">
+                Level Jabatan : <?php echo $data_level['level_nilai'] ?>
+            </span>
+        </td>
+
+        <td>
+            <input type="text" class="form-control" name="username_mengetahui[]" value="<?php echo $row['username_mengetahui'] ?>" id="mengetahui_username<?php echo $row['urutan_mengetahui'] + 1 ?>" readonly style="background-color:white">
+
+            <input type="text" name="urutan_mengetahui[]" value="<?php echo $row['urutan_mengetahui'] + 1 ?>" hidden>
+
+            <input type="text" id="level_mengetahui<?php echo $row['urutan_mengetahui'] + 1 ?>" value="<?php echo $data_level['level_nilai'] ?>" hidden>
+        </td>
+
+        <!-- <td style="text-align:center">
+            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+        </td> -->
+
+        </tr>
+        <?php } ?>
+        <!-- / Mengetahui n................................................. -->
+
+
+        <!-- Mengetahui n+2 (kacab + jumlah data awal) -->
+        <tr id="mengetahui<?php echo $jumlah_mengetahui+2 ?>">
+        <td><?php echo $jumlah_mengetahui+2 ?></td>
+
+        <td>
+            <div class="form-group input-group">
+            <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen<?php echo $jumlah_mengetahui+2 ?>" readonly style="background-color:white">
+            <span class="input-group-btn">
+                <button class="btn btn-info btn-flat ganti-mengetahui" type="button" data-toggle="modal" data-target="#modal-mengetahui<?php echo $jumlah_mengetahui+2 ?>">
+                <i class="fa fa-search"></i>
+                </button>
+            </span>
+            </div>
+        </td>
+
+        <td>
+            <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan<?php echo $jumlah_mengetahui+2 ?>" readonly style="background-color:white">
+        </td>
+
+        <td>
+            <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username<?php echo $jumlah_mengetahui+2 ?>" readonly style="background-color:white">
+            <input type="text" name="urutan_mengetahui[]" value="<?php echo $jumlah_mengetahui+2 ?>" hidden>
+        </td> 
+
+        <!-- <td style="text-align:center">
+            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+        </td> -->
+
+        </tr>
+        <!-- / Mengetahui  n+2 (kacab + jumlah data awal) .............. -->
+
+
+
 
         <!-- Mengetahui 2 -->
-        <tr id="mengetahui2">
+        <!-- <tr id="mengetahui2">
         <td>2</td>
 
         <td>
             <div class="form-group input-group">
             <input type="text" name="departemen_mengetahui[]" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiDepartemen'] ?>" class="form-control" required id="mengetahui_departemen2" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui2">
+                <button class="btn btn-info btn-flat ganti-mengetahui" type="button" data-toggle="modal" data-target="#modal-mengetahui2">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -246,31 +319,35 @@
 
         <td>
             <input type="text" class="form-control" name="jabatan_mengetahui[]" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiJabatan'] ?>" id="mengetahui_jabatan2" readonly style="background-color:white">
+
+            <span id="level_mengetahui2_v" class="text-success"><?php echo 'Level Jabatan : '.$level_nilai ?></span>
         </td>
 
         <td>
             <input type="text" class="form-control" name="username_mengetahui[]" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiUsername'] ?>" id="mengetahui_username2" readonly style="background-color:white">
 
             <input type="text" name="urutan_mengetahui[]" value="2" hidden>
-        </td>
+
+            <input type="text" id="level_mengetahui2" value="<?php echo $level_nilai ?>" hidden>
+        </td> -->
 
         <!-- <td style="text-align:center">
             <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
         </td> -->
 
-        </tr>
+        <!-- </tr> -->
         <!-- / Mengetahui 2............................................................................................ -->
 
 
         <!-- Mengetahui 3 -->
-        <tr id="mengetahui3">
+        <!-- <tr id="mengetahui3">
         <td>3</td>
 
         <td>
             <div class="form-group input-group">
             <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen3" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui3">
+                <button class="btn btn-info btn-flat ganti-mengetahui" type="button" data-toggle="modal" data-target="#modal-mengetahui3">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -279,30 +356,34 @@
 
         <td>
             <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan3" readonly style="background-color:white">
+
+            <span id="level_mengetahui3_v" class="text-success"></span>
         </td>
 
         <td>
             <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username3" readonly style="background-color:white">
             <input type="text" name="urutan_mengetahui[]" value="3" hidden>
-        </td>
+
+            <input type="text" id="level_mengetahui3" hidden>
+        </td> -->
 
         <!-- <td style="text-align:center">
             <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
         </td> -->
 
-        </tr>
+        <!-- </tr> -->
         <!-- / Mengetahui 3 ......................................................................................... -->
 
 
         <!-- Mengetahui 4 -->
-        <tr id="mengetahui4">
+        <!-- <tr id="mengetahui4">
         <td>4</td>
 
         <td>
             <div class="form-group input-group">
             <input type="text" name="departemen_mengetahui[]" class="form-control" id="mengetahui_departemen4" readonly style="background-color:white">
             <span class="input-group-btn">
-                <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui4">
+                <button class="btn btn-info btn-flat ganti-mengetahui" type="button" data-toggle="modal" data-target="#modal-mengetahui4">
                 <i class="fa fa-search"></i>
                 </button>
             </span>
@@ -311,18 +392,21 @@
 
         <td>
             <input type="text" class="form-control" name="jabatan_mengetahui[]" id="mengetahui_jabatan4" readonly style="background-color:white">
+            <span id="level_mengetahui4_v" class="text-success"></span>
         </td>
 
         <td>
             <input type="text" class="form-control" name="username_mengetahui[]" id="mengetahui_username4" readonly style="background-color:white">
             <input type="text" name="urutan_mengetahui[]" value="4" hidden>
-        </td>
+
+            <input type="text" id="level_mengetahui4" hidden>
+        </td> -->
 
         <!-- <td style="text-align:center">
             <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
         </td> -->
 
-        </tr>
+        <!-- </tr> -->
         <!-- / Mengetahui 4 ......................................................................................... -->
 
     </tbody>
@@ -338,7 +422,7 @@
 
 <!-- Modal Mengetahui 1 -->
 <div class="modal fade" id="modal-mengetahui1">
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-xl">
     <div class="modal-content">
     <div class="modal-header">
         <h4 class="modal-title">Pilih Mengetahui</h4>
@@ -354,6 +438,8 @@
                 <th>No</th>
                 <th>Departemen</th>
                 <th>Jabatan</th>
+                <th>Cabang</th>
+                <th>Level</th>
                 <th>Nama Lengkap</th>
                 <th>Pilih</th>
             </tr>
@@ -362,18 +448,24 @@
         <tbody>
             <?php 
                 $no=1;
-                foreach($data_user as $row_user){ 
+                foreach($data_user as $row_user){
+                    $level_nama = $row_user['level'] ;
+                    $data_level_nilai = $this->M_master->tampil_where('tbl_level', array('level' => $level_nama))->row_array();
+                    $level_angka = $data_level_nilai['level_nilai'];
             ?>
             <tr>
                 <td><?php echo $no++; ?></td>
                 <td><?php echo $row_user['departemen'] ?></td>
                 <td><?php echo $row_user['level'] ?></td>
+                <td><?php echo $row_user['cabang'] ?></td>
+                <td class="text-center"><?php echo $level_angka; ?></td>
                 <td><?php echo $row_user['nama_lengkap'] ?></td>
                 <td>
                     <button class="btn btn-info btn-xs" id="pilih-mengetahui1" type="button"
                     data-departemen="<?php echo $row_user['departemen'] ?>"
                     data-level="<?php echo $row_user['level'] ?>"
                     data-nama_lengkap="<?php echo $row_user['nama_lengkap'] ?>"
+                    data-level_nilai="<?php echo $row_user['level_nilai'] ?>"
                 >
                         <i class="fa fa-check"></i> Pilih
                     </button>
@@ -396,7 +488,7 @@
 
 <!-- Modal Mengetahui 2 -->
 <div class="modal fade" id="modal-mengetahui2">
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-xl">
     <div class="modal-content">
     <div class="modal-header">
         <h4 class="modal-title">Pilih Mengetahui</h4>
@@ -412,6 +504,8 @@
                 <th>No</th>
                 <th>Departemen</th>
                 <th>Jabatan</th>
+                <th>Cabang</th>
+                <th>Level</th>
                 <th>Nama Lengkap</th>
                 <th>Pilih</th>
             </tr>
@@ -421,17 +515,23 @@
             <?php 
                 $no=1;
                 foreach($data_user as $row_user){ 
+                    $level_nama = $row_user['level'] ;
+                    $data_level_nilai = $this->M_master->tampil_where('tbl_level', array('level' => $level_nama))->row_array();
+                    $level_angka = $data_level_nilai['level_nilai'];
             ?>
             <tr>
                 <td><?php echo $no++; ?></td>
                 <td><?php echo $row_user['departemen'] ?></td>
                 <td><?php echo $row_user['level'] ?></td>
+                <td><?php echo $row_user['cabang'] ?></td>
+                <td class="text-center"><?php echo $level_angka; ?></td>
                 <td><?php echo $row_user['nama_lengkap'] ?></td>
                 <td>
                     <button class="btn btn-info btn-xs" id="pilih-mengetahui2" type="button"
                     data-departemen="<?php echo $row_user['departemen'] ?>"
                     data-level="<?php echo $row_user['level'] ?>"
                     data-nama_lengkap="<?php echo $row_user['nama_lengkap'] ?>"
+                    data-level_nilai="<?php echo $row_user['level_nilai'] ?>"
                 >
                         <i class="fa fa-check"></i> Pilih
                     </button>
@@ -455,7 +555,7 @@
 
 <!-- Modal Mengetahui 3 -->
 <div class="modal fade" id="modal-mengetahui3">
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-xl">
     <div class="modal-content">
     <div class="modal-header">
         <h4 class="modal-title">Pilih Mengetahui</h4>
@@ -471,6 +571,8 @@
                 <th>No</th>
                 <th>Departemen</th>
                 <th>Jabatan</th>
+                <th>Cabang</th>
+                <th>Level</th>
                 <th>Nama Lengkap</th>
                 <th>Pilih</th>
             </tr>
@@ -480,17 +582,23 @@
             <?php 
                 $no=1;
                 foreach($data_user as $row_user){ 
+                    $level_nama = $row_user['level'] ;
+                    $data_level_nilai = $this->M_master->tampil_where('tbl_level', array('level' => $level_nama))->row_array();
+                    $level_angka = $data_level_nilai['level_nilai'];
             ?>
             <tr>
                 <td><?php echo $no++; ?></td>
                 <td><?php echo $row_user['departemen'] ?></td>
                 <td><?php echo $row_user['level'] ?></td>
+                <td><?php echo $row_user['cabang'] ?></td>
+                <td class="text-center"><?php echo $level_angka; ?></td>
                 <td><?php echo $row_user['nama_lengkap'] ?></td>
                 <td>
                     <button class="btn btn-info btn-xs" id="pilih-mengetahui3" type="button"
                     data-departemen="<?php echo $row_user['departemen'] ?>"
                     data-level="<?php echo $row_user['level'] ?>"
                     data-nama_lengkap="<?php echo $row_user['nama_lengkap'] ?>"
+                    data-level_nilai="<?php echo $row_user['level_nilai'] ?>"
                 >
                         <i class="fa fa-check"></i> Pilih
                     </button>
@@ -514,7 +622,7 @@
 
 <!-- Modal Mengetahui 4 -->
 <div class="modal fade" id="modal-mengetahui4">
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-xl">
     <div class="modal-content">
     <div class="modal-header">
         <h4 class="modal-title">Pilih Mengetahui</h4>
@@ -530,6 +638,8 @@
                 <th>No</th>
                 <th>Departemen</th>
                 <th>Jabatan</th>
+                <th>Cabang</th>
+                <th>Level</th>
                 <th>Nama Lengkap</th>
                 <th>Pilih</th>
             </tr>
@@ -539,17 +649,23 @@
             <?php 
                 $no=1;
                 foreach($data_user as $row_user){ 
+                    $level_nama = $row_user['level'] ;
+                    $data_level_nilai = $this->M_master->tampil_where('tbl_level', array('level' => $level_nama))->row_array();
+                    $level_angka = $data_level_nilai['level_nilai'];
             ?>
             <tr>
                 <td><?php echo $no++; ?></td>
                 <td><?php echo $row_user['departemen'] ?></td>
                 <td><?php echo $row_user['level'] ?></td>
+                <td><?php echo $row_user['cabang'] ?></td>
+                <td class="text-center"><?php echo $level_angka; ?></td>
                 <td><?php echo $row_user['nama_lengkap'] ?></td>
                 <td>
                     <button class="btn btn-info btn-xs" id="pilih-mengetahui4" type="button"
                     data-departemen="<?php echo $row_user['departemen'] ?>"
                     data-level="<?php echo $row_user['level'] ?>"
                     data-nama_lengkap="<?php echo $row_user['nama_lengkap'] ?>"
+                    data-level_nilai="<?php echo $row_user['level_nilai'] ?>"
                 >
                         <i class="fa fa-check"></i> Pilih
                     </button>
@@ -576,7 +692,6 @@
 
     <script>
         $(document).ready(function(){
-            $('#mengetahui2').hide();
             $('#mengetahui3').hide();
             $('#mengetahui4').hide();
         });
@@ -586,7 +701,6 @@
 
     <script>
         $(document).ready(function(){
-            $('#mengetahui3').hide();
             $('#mengetahui4').hide();
         });
     </script>
@@ -625,10 +739,14 @@ $(document).ready(function(){
         let departemen1 = $(this).data('departemen');
         let jabatan1 = $(this).data('level');
         let nama_lengkap1 = $(this).data('nama_lengkap');
+        let level_nilai1 = $(this).data('level_nilai');
 
         $('#mengetahui_departemen1').val(departemen1).css({'borderColor' : 'silver'});
         $('#mengetahui_jabatan1').val(jabatan1).css({'borderColor' : 'silver'});
         $('#mengetahui_username1').val(nama_lengkap1).css({'borderColor' : 'silver'});
+        $('#level_mengetahui1').val(level_nilai1).css({'borderColor' : 'silver'});
+
+        $('#level_mengetahui1_v').text('Level Jabatan : ' + level_nilai1);
 
         $('#modal-mengetahui1').modal('hide');
     });
@@ -637,10 +755,14 @@ $(document).ready(function(){
         let departemen2 = $(this).data('departemen');
         let jabatan2 = $(this).data('level');
         let nama_lengkap2 = $(this).data('nama_lengkap');
+        let level_nilai2 = $(this).data('level_nilai');
 
         $('#mengetahui_departemen2').val(departemen2).css({'borderColor' : 'silver'});
         $('#mengetahui_jabatan2').val(jabatan2).css({'borderColor' : 'silver'});
         $('#mengetahui_username2').val(nama_lengkap2).css({'borderColor' : 'silver'});
+        $('#level_mengetahui2').val(level_nilai2).css({'borderColor' : 'silver'});
+
+        $('#level_mengetahui2_v').text('Level Jabatan : ' + level_nilai2);
 
         $('#modal-mengetahui2').modal('hide');
     });
@@ -649,10 +771,14 @@ $(document).ready(function(){
         let departemen3 = $(this).data('departemen');
         let jabatan3 = $(this).data('level');
         let nama_lengkap3 = $(this).data('nama_lengkap');
+        let level_nilai3 = $(this).data('level_nilai');
 
         $('#mengetahui_departemen3').val(departemen3).css({'borderColor' : 'silver'});
         $('#mengetahui_jabatan3').val(jabatan3).css({'borderColor' : 'silver'});
         $('#mengetahui_username3').val(nama_lengkap3).css({'borderColor' : 'silver'});
+        $('#level_mengetahui3').val(level_nilai3).css({'borderColor' : 'silver'});
+
+        $('#level_mengetahui3_v').text('Level Jabatan : ' + level_nilai3);
 
         $('#modal-mengetahui3').modal('hide');
     });
@@ -661,10 +787,14 @@ $(document).ready(function(){
         let departemen4 = $(this).data('departemen');
         let jabatan4 = $(this).data('level');
         let nama_lengkap4 = $(this).data('nama_lengkap');
+        let level_nilai4 = $(this).data('level_nilai');
 
         $('#mengetahui_departemen4').val(departemen4).css({'borderColor' : 'silver'});
         $('#mengetahui_jabatan4').val(jabatan4).css({'borderColor' : 'silver'});
         $('#mengetahui_username4').val(nama_lengkap4).css({'borderColor' : 'silver'});
+        $('#level_mengetahui4').val(level_nilai4).css({'borderColor' : 'silver'});
+
+        $('#level_mengetahui4_v').text('Level Jabatan : ' + level_nilai4);
 
         $('#modal-mengetahui4').modal('hide');
     });

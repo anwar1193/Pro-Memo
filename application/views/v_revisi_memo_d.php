@@ -4,6 +4,8 @@
     $level = $this->libraryku->tampil_user()->level;
     $cabang = $this->libraryku->tampil_user()->cabang;
     $departemen = $this->libraryku->tampil_user()->departemen;
+
+    $nomor_memo = $data_memo['nomor_memo'];
   ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -35,7 +37,11 @@
             
           <div class="col-sm-8 offset-2" style="border:1px dashed gray; padding: 10px;">
     
-          <h3 style="text-align: center;">MEMO <?php echo $data_memo['perihal'] ?></h3>
+          <h3 style="text-align: center;">
+            <?= $data_memo['perihal'] != 'MEMO GENERAL' ? 'MEMO' : NULL ?> 
+            <?php echo $data_memo['perihal'] ?>
+            <?= $data_memo['perihal'] == 'PELEPASAN BPKB AYDA' ? '/ WO' : NULL; ?>
+          </h3>
 
           <!-- <hr style="border-width: 0.5px; width: 100%; border-color: silver; border-style: dashed;"> -->
 
@@ -87,7 +93,10 @@
               <tr>
                   <th width="40%">Perihal</th>
                   <th>:</th>
-                  <td><?php echo $data_memo['perihal'] ?></td>
+                  <td>
+                      <?php echo $data_memo['perihal'] ?>
+                      <?= $data_memo['perihal'] == 'PELEPASAN BPKB AYDA' ? '/ WO' : NULL; ?>
+                  </td>
               </tr>
 
           </table>
@@ -126,7 +135,7 @@
                         <td><?php echo $row_dapin_pba['nomor_pinjaman'] ?></td>
                         <td><?php echo $row_dapin_pba['nama_nasabah'] ?></td>
                         <td><?php echo $row_dapin_pba['status_pinjaman'] ?></td>
-                        <td><?php echo $row_dapin_pba['sumber_dana'] ?></td>
+                        <td><?= $row_dapin_pba['sumber_dana']=='' ? '(Diisi Reviewer)' : $row_dapin_pba['sumber_dana']; ?></td>
                         <td><?php echo $row_dapin_pba['keterangan'] ?></td>
                     </tr>
                     <?php } ?>
@@ -164,7 +173,7 @@
                         <td><?php echo $row_dapin_pbl['tanggal_lunas'] ?></td>
                         <td><?php echo $row_dapin_pbl['status_lunas'] ?></td>
                         <td><?php echo $row_dapin_pbl['status_hold_denda'] ?></td>
-                        <td><?php echo $row_dapin_pbl['sumber_dana'] ?></td>
+                        <td><?= $row_dapin_pbl['sumber_dana']=='' ? 'Diisi Reviewer' : $row_dapin_pbl['sumber_dana']; ?></td>
                         <td><?php echo $row_dapin_pbl['keterangan'] ?></td>
                     </tr>
                     <?php } ?>
@@ -200,20 +209,79 @@
                         <td><?php echo $row_dapin_ppb['nama_nasabah'] ?></td>
                         <td><?php echo $row_dapin_ppb['os_pokok'] ?></td>
                         <td><?php echo $row_dapin_ppb['parameter'] ?></td>
-                        <td><?php echo $row_dapin_ppb['sumber_dana'] ?></td>
+                        <td><?= $row_dapin_ppb['sumber_dana']=='' ? '(Diisi Reviewer)' : $row_dapin_ppb['sumber_dana']; ?></td>
                         <td><?php echo $row_dapin_ppb['keterangan'] ?></td>
                     </tr>
                     <?php } ?>
                 </tbody>
             </table>
 
-          <?php } ?>
+          <?php }elseif($data_memo['perihal'] == 'PEMINJAMAN BPKB'){ ?>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="8">DATA PINJAMAN NASABAH</th>
+                    </tr>
+                    <tr>
+                        <th>NO</th>
+                        <th>No Pinjaman</th>
+                        <th>Nama Nasabah</th>
+                        <th>Nomor Polisi</th>
+                        <th>Nomor BPKB</th>
+                        <th>Sumber Dana</th>
+                        <th>Keperluan</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php 
+                        $no=1;
+                        foreach($data_dapin_pmb as $row_dapin_pmb){ 
+                    ?>
+                    <tr>
+                        <td><?php echo $no++; ?></td>
+                        <td><?php echo $row_dapin_pmb['nomor_pinjaman'] ?></td>
+                        <td><?php echo $row_dapin_pmb['nama_nasabah'] ?></td>
+                        <td><?php echo $row_dapin_pmb['nomor_polisi'] ?></td>
+                        <td><?php echo $row_dapin_pmb['nomor_bpkb'] ?></td>
+                        <td><?= $row_dapin_pmb['sumber_dana']=='' ? '(Diisi Reviewer)' : $row_dapin_pmb['sumber_dana'] ?></td>
+                        <td><?php echo $row_dapin_pmb['keperluan'] ?></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+
+            <?php }elseif($data_memo['perihal'] == 'MEMO GENERAL'){ ?>
+
+                <div class="bg-warning p-2">
+                    <b><?php echo $data_general['isi_memo_general'] ?></b>
+                </div>
+
+            <?php } ?>
           <!-- / Data Pinjaman Nasabah -->
 
           <!-- Isi Text-2 -->
           <p style="font-size:18px">
             <?php echo $data_memo['text2']; ?>
           </p>
+
+          <!-- Berkas Pendukung -->
+          <div style="margin-top:30px">
+            <h6 class="font-weight-bold">Berkas Pendukung :</h6>
+            <ul>
+                <?php 
+                    foreach($data_upload as $row_file){ 
+                    $nama_folder = substr($row_file['file'], 0, 10); 
+                ?>
+                <li>
+                    <?php echo $row_file['nama_file'] ?>
+                    <a target="_blank" href="<?php echo base_url().'file_upload/'.$nama_folder.'/'.$row_file['file'] ?>">Download</a>
+                </li>
+                <?php } ?>
+            </ul>
+          </div>
+          <!-- END Berkas Pendukung -->
 
 
           <!-- Mengetahui - Menyetujui -->
@@ -231,7 +299,7 @@
                                 foreach($data_mengetahui as $row_mengetahui){
                                     
                                     if($row_mengetahui['status'] == 'done'){
-                                        echo $row_mengetahui['username_mengetahui'].'&nbsp; 
+                                        echo $row_mengetahui['username_mengetahui'].'<br> 
                                         <span style="background-color:green; color:white; padding:2px; border-radius:50%"><i class="fa fa-check"></i></span> 
 
                                         <a href="#" data-toggle="modal" data-target="#modal-note" id="pilih_note"
@@ -245,7 +313,7 @@
                                         <br> ('.$row_mengetahui['jabatan_mengetahui'].' - '.$row_mengetahui['departemen_mengetahui'].')';
 
                                     }elseif($row_mengetahui['status'] == 'revisi'){
-                                        echo $row_mengetahui['username_mengetahui'].'&nbsp; 
+                                        echo $row_mengetahui['username_mengetahui'].'<br> 
                                         <span style="background-color:orange; color:white; padding:2px; border-radius:50%"><i class="fas fa-allergies"></i></span> 
 
                                         <a href="#" data-toggle="modal" data-target="#modal-note" id="pilih_note"
@@ -259,7 +327,7 @@
                                         <br> ('.$row_mengetahui['jabatan_mengetahui'].' - '.$row_mengetahui['departemen_mengetahui'].')';
 
                                     }else{
-                                        echo $row_mengetahui['username_mengetahui'].'&nbsp; 
+                                        echo $row_mengetahui['username_mengetahui'].'<br> 
                                         <span style="background-color:blue; color:white; padding:2px; border-radius:50%"><i class="fa fa-clock"></i></span> 
                                         <br> ('.$row_mengetahui['jabatan_mengetahui'].' - '.$row_mengetahui['departemen_mengetahui'].')';
                                     }
@@ -273,7 +341,7 @@
                             <?php  
                                 foreach($data_menyetujui as $row_menyetujui){
                                     if($row_menyetujui['status'] == 'done'){
-                                        echo $row_menyetujui['username_menyetujui'].'&nbsp; 
+                                        echo $row_menyetujui['username_menyetujui'].'<br> 
                                         <span style="background-color:green; color:white; padding:2px; border-radius:50%"><i class="fa fa-check"></i></span> 
                                         
                                         <a href="#" data-toggle="modal" data-target="#modal-note2" id="pilih_note2"
@@ -285,8 +353,21 @@
                                         </a> 
 
                                         <br> ('.$row_menyetujui['jabatan_menyetujui'].')';
+                                    }elseif($row_menyetujui['status'] == 'revisi'){
+                                        echo $row_menyetujui['username_menyetujui'].'<br> 
+                                        <span style="background-color:orange; color:white; padding:2px; border-radius:50%"><i class="fas fa-allergies"></i></span> 
+                                        
+                                        <a href="#" data-toggle="modal" data-target="#modal-note2" id="pilih_note2"
+                                            data-note="'.$row_menyetujui['note_menyetujui'].'"
+                                            data-username="'.$row_menyetujui['username_menyetujui'].'"
+                                            data-jabatan="'.$row_menyetujui['jabatan_menyetujui'].'"
+                                        >
+                                        <span style="font-size:22px; color:black"><i class="fa fa-comments"></i></span>
+                                        </a> 
+
+                                        <br> ('.$row_menyetujui['jabatan_menyetujui'].')';
                                     }else{
-                                        echo $row_menyetujui['username_menyetujui'].'&nbsp; <span style="background-color:blue; color:white; padding:2px; border-radius:50%"><i class="fa fa-clock"></i></span> <br> ('.$row_menyetujui['jabatan_menyetujui'].')';
+                                        echo $row_menyetujui['username_menyetujui'].'<br> <span style="background-color:blue; color:white; padding:2px; border-radius:50%"><i class="fa fa-clock"></i></span> <br> ('.$row_menyetujui['jabatan_menyetujui'].')';
                                     }
                                     
                                     
@@ -330,6 +411,28 @@
                     <span style="font-size:22px; color:black;"><i class="fa fa-comments"></i></span> = Note Approve (Di Klik)
                   </li>
                   
+              </ul>
+          </p>
+
+
+          <!-- History Revisi -->
+          <p class="mt-5">
+              
+              <span class="bg-warning p-1">
+                <b>History Revisi :</b>
+              </span>
+
+              <?php  
+                $data_revisi = $this->db->query("SELECT * FROM tbl_log_revisi WHERE nomor_memo='$nomor_memo' ORDER BY id")->result_array();
+              ?>
+              <ul>
+                  <?php foreach($data_revisi as $row){ ?>
+                  <li class="mb-1">
+                      Tanggal <b><?php echo date('d-m-Y', strtotime($row['tanggal_revisi'])) ?></b>, 
+                      Oleh : <b><?php echo $row['pic_revisi'] ?></b> <br>
+                      Note Revisi : <b>"<?php echo $row['note_revisi'] ?>"</b>
+                  </li>
+                  <?php } ?>
               </ul>
           </p>
 

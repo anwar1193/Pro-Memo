@@ -46,8 +46,25 @@
             
             <!-- Tab Memo Final -->
             <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+
+                <form action="<?php echo base_url().'memo_final/index_cari' ?>" method="post">
+                  <i class="fa fa-search"></i> Cari Memo :
+                  <input type="text" name="nopin" placeholder="Masukkan Nopin" autocomplete="off" required>
+
+                  <select name="jenis_memo" required="">
+                    <option value="">-Pilih Jenis Memo-</option>
+                    <?php foreach($jenis_memo as $row){ ?>
+                    <option value="<?php echo $row['jenis_memo_perihal'] ?>"><?php echo $row['jenis_memo_perihal'] ?></option>
+                    <?php } ?>
+                  </select>
+
+                  <button class="btn btn-success btn-sm" type="submit">Cari</button>
+                </form>
+
+                <br>
+
                 <table id="example1" class="table table-bordered table-striped">
-                  
+           
                   <thead>
                   <tr>
                     <th>NO</th>
@@ -72,7 +89,10 @@
                     <td><?php echo date('d-m-Y', strtotime($row['tanggal'])); ?></td>
                     <td><?php echo $row['cabang']; ?></td>
                     <td><?php echo $row['bagian']; ?></td>
-                    <td><?php echo $row['perihal']; ?></td>
+                    <td>
+                      <?php echo $row['perihal']; ?>
+                      <?= $row['perihal'] == 'PELEPASAN BPKB AYDA' ? '/ WO' : NULL; ?>
+                    </td>
                     <td class="text-center">
                         <a href="<?php echo base_url().'memo_final/detail/'.$row['id_memo'] ?>" class="btn btn-warning btn-sm">
                             <i class="fa fa-eye"></i> Detail Memo
@@ -118,12 +138,23 @@
                     <td><?php echo date('d-m-Y', strtotime($row['tanggal'])); ?></td>
                     <td><?php echo $row['cabang']; ?></td>
                     <td><?php echo $row['bagian']; ?></td>
-                    <td><?php echo $row['perihal']; ?></td>
+                    <td>
+                      <?php echo $row['perihal']; ?>
+                      <?= $row['perihal'] == 'PELEPASAN BPKB AYDA' ? '/ WO' : NULL; ?>
+                    </td>
 
                     <td class="text-center">
                         <?php if($row['status_mengetahui'] == 0){ ?>
                             <span style="background-color: green; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
                                 Done
+                            </span>
+                        <?php }elseif($row['status_mengetahui'] == -1){ ?>
+                            <span style="background-color: orange; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                Revisi
+                            </span>
+                        <?php }elseif($row['status_mengetahui'] == -2){ ?>
+                            <span style="background-color: red; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                Rejected
                             </span>
                         <?php }else{ ?>
                             <span style="background-color: blue; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
@@ -136,6 +167,18 @@
                         <?php if($row['status_mengetahui'] == 0 && $row['status_menyetujui'] == 0){ ?>
                             <span style="background-color: green; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
                                 Done
+                            </span>
+                        <?php }elseif($row['status_mengetahui'] == 0 && $row['status_menyetujui'] == -1){ ?>
+                            <span style="background-color: orange; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                Revisi
+                            </span>
+                        <?php }elseif($row['status_mengetahui'] == 0 && $row['status_menyetujui'] == -2){ ?>
+                            <span style="background-color: red; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                Rejected
+                            </span>
+                        <?php }elseif($row['status_mengetahui'] == -2 && $row['status_menyetujui'] == 0){ ?>
+                            <span style="background-color: gray; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">
+                                Cancelled
                             </span>
                         <?php }else{ ?>
                             <span style="background-color: blue; color: white; font-weight: bold; padding: 2px; font-size: 12px; border-radius: 5px; text-transform: capitalize;">

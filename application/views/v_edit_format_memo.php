@@ -40,6 +40,40 @@
 
       <input type="text" name="jenis_memo_id" value="<?php echo $data_jenis_memo['jenis_memo_id'] ?>" hidden>
 
+      <!-- Owner Memo .....................................................................-->
+      <div class="form-group">
+          <table width="100%">
+              <tr>
+                  <td width="20%">
+                  <label for="owner">Owner</label>
+                  </td>
+
+                  <td width="10%" style="text-align: center;">:</td>
+
+                  <td width="70%">
+                    <?php if($level == 'admin'){ ?>
+
+                      <select name="owner" class="form-control" required="">
+                          <option value="<?php echo $data_jenis_memo['jenis_memo_owner'] ?>">
+                          <?php echo $data_jenis_memo['jenis_memo_owner'] ?>
+                          </option>
+
+                          <?php foreach($data_departemen as $row){ ?>
+                          <option value="<?php echo $row['nama_departemen'] ?>"><?php echo $row['nama_departemen'] ?></option>
+                          <?php } ?>
+                      </select>
+
+                    <?php }else{ ?>
+
+                      <input type="text" class="form-control" name="owner" autocomplete="off" value="<?php echo $departemen; ?>" readonly>
+                      
+                    <?php } ?>
+                  </td>
+              </tr>
+          </table>
+      </div>
+      <!-- / Owner Memo ...................................................................-->
+
       <!-- Nomor Memo .....................................................................-->
       <div class="form-group">
           <table width="100%">
@@ -51,7 +85,7 @@
                   <td width="10%" style="text-align: center;">:</td>
 
                   <td width="70%">
-                      <input type="text" class="form-control" name="jenis_memo" autocomplete="off" required="" value="<?php echo $data_jenis_memo['jenis_memo_perihal'] ?>">
+                      <input type="text" class="form-control" name="jenis_memo" autocomplete="off" required="" value="<?php echo $data_jenis_memo['jenis_memo_perihal'] ?>" readonly>
                   </td>
               </tr>
           </table>
@@ -152,128 +186,13 @@
       </div>
       <!-- / CC ...................................................................-->
 
-      <!-- Mengetahui Nama .....................................................................-->
-      <div class="form-group">
-          <table width="100%">
-              <tr>
-                  <td width="20%">
-                  <label for="mengetahui_nama">Mengetahui (Nama)</label>
-                  </td>
+      <hr>
 
-                  <td width="10%" style="text-align: center;">:</td>
+      <!-- Mengetahui -->
+      <?php require_once('mengetahui_master_revisi.php'); ?>
 
-                  <td width="70%">
-                    <div class="form-group input-group">
-                        <input type="text" name="mengetahui_nama" id="mengetahui_nama" class="form-control" required value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiUsername'] ?>">
-                        <span class="input-group-btn">
-                            <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-mengetahui">
-                            <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                        </div>
-                  </td>
-              </tr>
-          </table>
-      </div>
-      <!-- / Mengetahui Nama ...................................................................-->
-
-      <!-- Mengetahui Departemen .....................................................................-->
-      <div class="form-group">
-          <table width="100%">
-              <tr>
-                  <td width="20%">
-                  <label for="mengetahui_departemen">Mengetahui (Departemen)</label>
-                  </td>
-
-                  <td width="10%" style="text-align: center;">:</td>
-
-                  <td width="70%">
-                    <input type="text" class="form-control" name="mengetahui_departemen" readonly id="mengetahui_departemen" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiDepartemen'] ?>">
-                  </td>
-              </tr>
-          </table>
-      </div>
-      <!-- / Mengetahui Departemen ...................................................................-->
-
-      <!-- Mengetahui Jabatan .....................................................................-->
-      <div class="form-group">
-          <table width="100%">
-              <tr>
-                  <td width="20%">
-                  <label for="mengetahui_jabatan">Mengetahui (Jabatan)</label>
-                  </td>
-
-                  <td width="10%" style="text-align: center;">:</td>
-
-                  <td width="70%">
-                    <input type="text" class="form-control" name="mengetahui_jabatan" readonly id="mengetahui_jabatan" value="<?php echo $data_jenis_memo['jenis_memo_mengetahuiJabatan'] ?>">
-                  </td>
-              </tr>
-          </table>
-      </div>
-      <!-- / Mengetahui Jabatan ...................................................................-->
-
-
-      <!-- Menyetujui Nama .....................................................................-->
-      <div class="form-group">
-          <table width="100%">
-              <tr>
-                  <td width="20%">
-                  <label for="menyetujui_nama">Menyetujui (Nama)</label>
-                  </td>
-
-                  <td width="10%" style="text-align: center;">:</td>
-
-                  <td width="70%">
-                    <div class="form-group input-group">
-                        <input type="text" name="menyetujui_nama" id="menyetujui_nama" class="form-control" required value="<?php echo $data_jenis_memo['jenis_memo_menyetujuiUsername'] ?>">
-                        <span class="input-group-btn">
-                            <button class="btn btn-info btn-flat" type="button" data-toggle="modal" data-target="#modal-menyetujui">
-                            <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                        </div>
-                  </td>
-              </tr>
-          </table>
-      </div>
-      <!-- / Menyetujui Nama ...................................................................-->
-
-      <!-- Menyetujui Departemen .....................................................................-->
-      <div class="form-group">
-          <table width="100%">
-              <tr>
-                  <td width="20%">
-                  <label for="menyetujui_departemen">Menyetujui (Departemen)</label>
-                  </td>
-
-                  <td width="10%" style="text-align: center;">:</td>
-
-                  <td width="70%">
-                    <input type="text" class="form-control" name="menyetujui_departemen" readonly id="menyetujui_departemen" value="<?php echo $data_jenis_memo['jenis_memo_menyetujuiDepartemen'] ?>">
-                  </td>
-              </tr>
-          </table>
-      </div>
-      <!-- / Menyetujui Departemen ...................................................................-->
-
-      <!-- Menyetujui Jabatan .....................................................................-->
-      <div class="form-group">
-          <table width="100%">
-              <tr>
-                  <td width="20%">
-                  <label for="menyetujui_jabatan">Menyetujui (Jabatan)</label>
-                  </td>
-
-                  <td width="10%" style="text-align: center;">:</td>
-
-                  <td width="70%">
-                    <input type="text" class="form-control" name="menyetujui_jabatan" readonly id="menyetujui_jabatan" value="<?php echo $data_jenis_memo['jenis_memo_menyetujuiJabatan'] ?>">
-                  </td>
-              </tr>
-          </table>
-      </div>
-      <!-- / Menyetujui Jabatan ...................................................................-->
+      <!-- Menyetujui -->
+      <?php require_once('menyetujui_master_revisi.php'); ?>
 
 
       <div class="tombol_kirim" style="text-align: center;">

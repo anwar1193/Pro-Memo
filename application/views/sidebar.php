@@ -63,9 +63,14 @@
           </li>
 
           <!-- MASTER DATA -->
-          <?php if($level=='admin'){ ?>
-          <li class="nav-item has-treeview <?= $this->uri->segment(1)=='master_user' || $this->uri->segment(1)=='master_format_memo' ? 'menu-open' : null; ?>">
-            <a href="#" class="nav-link <?= $this->uri->segment(1)=='master_user' || $this->uri->segment(1)=='master_format_memo' ? 'active' : null; ?>">
+              <!-- Cek Apakah user ini punya format memo? -->
+              <?php  
+                $cek_punya_memo = $this->M_master->tampil_where('tbl_jenis_memo', array('jenis_memo_owner' => $departemen))->num_rows();
+              ?>
+
+          <?php if($level=='admin' || $level=='Department Head' && $cek_punya_memo>0){ ?>
+          <li class="nav-item has-treeview <?= $this->uri->segment(1)=='master_user' || $this->uri->segment(1)=='master_format_memo' || $this->uri->segment(1)=='master_cabang' || $this->uri->segment(1)=='master_departemen' || $this->uri->segment(1)=='master_level' || $this->uri->segment(1)=='master_user_memo' ? 'menu-open' : null; ?>">
+            <a href="#" class="nav-link <?= $this->uri->segment(1)=='master_user' || $this->uri->segment(1)=='master_format_memo' || $this->uri->segment(1)=='master_cabang' || $this->uri->segment(1)=='master_departemen' || $this->uri->segment(1)=='master_level' || $this->uri->segment(1)=='master_user_memo' ? 'active' : null; ?>">
               <i class="nav-icon fa fa-list"></i>
               <p>
                 Master
@@ -74,12 +79,35 @@
             </a>
             <ul class="nav nav-treeview">
 
+              <?php if($level == 'admin'){ ?>
+              <li class="nav-item">
+                <a href="<?php echo base_url().'master_cabang' ?>" class="nav-link <?= $this->uri->segment(1)=='master_cabang' ? 'active' : null; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Data Cabang</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="<?php echo base_url().'master_departemen' ?>" class="nav-link <?= $this->uri->segment(1)=='master_departemen' ? 'active' : null; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Data Departemen</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="<?php echo base_url().'master_level' ?>" class="nav-link <?= $this->uri->segment(1)=='master_level' ? 'active' : null; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Data Level</p>
+                </a>
+              </li>
+
               <li class="nav-item">
                 <a href="<?php echo base_url().'master_user' ?>" class="nav-link <?= $this->uri->segment(1)=='master_user' ? 'active' : null; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Data User</p>
                 </a>
               </li>
+              <?php } ?>
 
               <li class="nav-item">
                 <a href="<?php echo base_url().'master_format_memo' ?>" class="nav-link <?= $this->uri->segment(1)=='master_format_memo' ? 'active' : null; ?>">
@@ -87,6 +115,15 @@
                   <p>Format Memo</p>
                 </a>
               </li>
+
+              <?php if($level == 'admin'){ ?>
+                <li class="nav-item">
+                  <a href="<?php echo base_url().'master_user_memo' ?>" class="nav-link <?= $this->uri->segment(1)=='master_user_memo' ? 'active' : null; ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Relasi User-Memo</p>
+                  </a>
+                </li>
+              <?php } ?>
 
             </ul>
           </li>
@@ -117,6 +154,35 @@
               <i class="nav-icon fas fa-paper-plane"></i>
               <p>
                 Memo Terkirim
+                <?php  
+                  $jumlah_memo_terkirim = $this->M_master->tampil_where_memo('tbl_memo', array(
+                    'cabang' => $cabang,
+                    'bagian' => $identitas
+                ))->num_rows();
+                ?>
+                <span class="badge badge-primary right">
+                  <?php echo $jumlah_memo_terkirim; ?>
+                </span>
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="<?php echo base_url().'memo_selesai' ?>" class="nav-link <?= $this->uri->segment(1)=='memo_selesai' ? 'active' : null; ?>">
+              <i class="nav-icon fas fa-check-double"></i>
+              <p>
+                Memo Selesai
+                <?php  
+                  $jumlah_memo_selesai = $this->M_master->tampil_where_memo('tbl_memo', array(
+                    'cabang' => $cabang,
+                    'bagian' => $identitas,
+                    'status_mengetahui' => 0,
+                    'status_menyetujui' => 0
+                ))->num_rows();
+                ?>
+                <span class="badge badge-success right">
+                  <?php echo $jumlah_memo_selesai; ?>
+                </span>
               </p>
             </a>
           </li>
@@ -127,7 +193,7 @@
               <p>
                 Revisi Memo
                 <?php  
-                  $jumlah_memo_revisi = $this->db->query("SELECT * FROM tbl_memo WHERE cabang='$cabang' AND bagian='$identitas' AND status_mengetahui=-1")->num_rows();
+                  $jumlah_memo_revisi = $this->db->query("SELECT * FROM tbl_memo WHERE cabang='$cabang' AND bagian='$identitas' AND status_mengetahui=-1 OR cabang='$cabang' AND bagian='$identitas' AND status_menyetujui=-1")->num_rows();
                 ?>
                 <span class="badge badge-warning right">
                   <?php echo $jumlah_memo_revisi; ?>
@@ -135,6 +201,24 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="<?php echo base_url().'rejected_memo' ?>" class="nav-link <?= $this->uri->segment(1)=='rejected_memo' ? 'active' : null; ?>">
+              <i class="nav-icon fas fa-times"></i>
+              <p>
+                Rejected Memo
+                <?php  
+                  $jumlah_memo_rejected = $this->db->query("SELECT * FROM tbl_memo WHERE cabang='$cabang' AND bagian='$identitas' AND status_mengetahui=-2 OR cabang='$cabang' AND bagian='$identitas' AND status_menyetujui=-2")->num_rows();
+                ?>
+                <span class="badge badge-danger right">
+                  <?php echo $jumlah_memo_rejected; ?>
+                </span>
+              </p>
+            </a>
+          </li>
+
+          <!-- Menu Bukan Untuk ADCO, ADCOLL, CMC, ADD-CABANG -->
+          <?php if($level != 'ADCO' && $level != 'ADCOLL' && $level != 'CMC' && $level != 'ADD-CABANG'){ ?>
 
           <li class="nav-item">
             <a href="<?php echo base_url().'inbox_mengetahui' ?>" class="nav-link <?= $this->uri->segment(1)=='inbox_mengetahui' ? 'active' : null; ?>">
@@ -151,6 +235,7 @@
               </p>
             </a>
           </li>
+          
 
           <li class="nav-item">
             <a href="<?php echo base_url().'inbox_menyetujui' ?>" class="nav-link <?= $this->uri->segment(1)=='inbox_menyetujui' ? 'active' : null; ?>">
@@ -160,7 +245,7 @@
                 <?php  
                   $jumlah_inbox_menyetujui = $this->M_master->tampil_inbox_menyetujui($departemen, $level, $nama_lengkap)->num_rows();
                 ?>
-                <span class="badge badge-danger right">
+                <span class="badge badge-primary right">
                   <?php echo $jumlah_inbox_menyetujui; ?>
                 </span>
 
@@ -203,7 +288,7 @@
             </ul>
           </li>
 
-          
+          <?php } ?>
           
           <li class="nav-header">USER</li>
           <li class="nav-item">
@@ -244,10 +329,13 @@
             <select name="jenis_memo" id="jenis_memo" class="form-control" required="">
               <option value="">-Pilih-</option>
               <?php
-                $data_jenisMemo = $this->M_master->jenis_memo()->result_array();
+                $data_jenisMemo = $this->db->query("SELECT * FROM tbl_user_memo WHERE user='$identitas'")->result_array();
                 foreach($data_jenisMemo as $row){
               ?>
-              <option value="<?php echo $row['jenis_memo_perihal'] ?>"><?php echo $row['jenis_memo_perihal'] ?></option>
+              <option value="<?php echo $row['jenis_memo'] ?>">
+                <?php echo $row['jenis_memo'] ?>
+                <?= $row['jenis_memo'] == 'PELEPASAN BPKB AYDA' ? '/ WO' : NULL; ?>
+              </option>
               <?php } ?>
             </select>
           </div>

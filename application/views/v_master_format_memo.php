@@ -43,6 +43,7 @@
                   <tr>
                     <th>NO</th>
                     <th>Jenis Memo</th>
+                    <th>Owner</th>
                     <th>Kepada</th>
                     <th>CC</th>
                     <th>Mengetahui</th>
@@ -56,14 +57,36 @@
                   <?php  
                     $no=1;
                     foreach($data_format_memo as $row){
+
+                      $jenis_memo = $row['jenis_memo_perihal'];
+
+                      $data_mengetahui = $this->M_master->tampil_where('tbl_jenis_memo_mengetahui', array('jenis_memo' => $jenis_memo))->result_array();
+
+                      $data_menyetujui = $this->M_master->tampil_where('tbl_jenis_memo_menyetujui', array('jenis_memo' => $jenis_memo))->result_array();
                   ?>
                   <tr>
                     <td><?php echo $no++; ?></td>
                     <td><?php echo $row['jenis_memo_perihal']; ?></td>
+                    <td><?php echo $row['jenis_memo_owner']; ?></td>
                     <td><?php echo $row['jenis_memo_kepada']; ?></td>
                     <td><?php echo $row['jenis_memo_cc']; ?></td>
-                    <td><?php echo $row['jenis_memo_mengetahuiDepartemen'].'<br>('.$row['jenis_memo_mengetahuiUsername'].')'; ?></td>
-                    <td><?php echo $row['jenis_memo_menyetujuiDepartemen'].'<br>('.$row['jenis_memo_menyetujuiUsername'].')'; ?></td>
+
+                    <td>
+                      <?php 
+                        foreach($data_mengetahui as $row_mengetahui){
+                          echo $row_mengetahui['departemen_mengetahui'].' - ('.$row_mengetahui['username_mengetahui'].') <br><br>'; 
+                        }
+                      ?>
+                    </td>
+
+                    <td>
+                      <?php 
+                        foreach($data_menyetujui as $row_menyetujui){
+                          echo $row_menyetujui['departemen_menyetujui'].' - ('.$row_menyetujui['username_menyetujui'].') <br><br>'; 
+                        }
+                      ?>
+                    </td>
+
                     <td>
                         <a href="<?php echo base_url().'master_format_memo/edit/'.$row['jenis_memo_id'] ?>" class="btn btn-info">
                             <i class="fa fa-edit"></i>

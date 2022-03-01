@@ -48,7 +48,7 @@
                     <th>Cabang</th>
                     <th>Dept</th>
                     <th>Username</th>
-                    <th>Action</th>
+                    <th class="text-center">Action</th>
                   </tr>
                   </thead>
 
@@ -66,12 +66,12 @@
                     <td><?php echo $row['cabang']; ?></td>
                     <td><?php echo $row['departemen']; ?></td>
                     <td><?php echo $row['username']; ?></td>
-                    <td>
-                        <a href="<?php echo base_url().'master_user/edit' ?>" class="btn btn-info">
+                    <td class="text-center">
+                        <a href="<?php echo base_url().'master_user/edit_user/'.$row['id'] ?>" class="btn btn-info">
                             <i class="fa fa-edit"></i>
                         </a>
 
-                        <a href="<?php echo base_url().'master_user/hapus' ?>" class="btn btn-danger">
+                        <a href="<?php echo base_url().'master_user/hapus_user/'.$row['id'] ?>" class="btn btn-danger" onclick="return confirm('Anda Yakin?')">
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>
