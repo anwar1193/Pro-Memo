@@ -13,11 +13,15 @@ class Login extends CI_Controller {
 	public function index()
 	{
 		cek_sudah_login();
-		$this->load->view('v_login');
+		$this->load->view('admin/v_login');
 	}
 
 	public function ke_home(){
 		redirect('home');
+	}
+
+	public function ke_ganti_password(){
+		redirect('ganti_password');
 	}
 
 	public function proses(){
@@ -35,34 +39,42 @@ class Login extends CI_Controller {
 		$row = $result->row_array();
 		$sedang_login = $row['sedang_login'];
 		$id_user = $row['id'];
+		$jenis_user = $row['jenis_user'];
+		$status_user = $row['status_user'];
 
-		if($sedang_login == 'ya'){ // Jika user tsb sedang login
+		if($cek>0){	
+			// Validasi jika user yang digunakan adalah user alternate
+			if($jenis_user == 'alternate' && $status_user != 'aktif'){
+				echo '<script>alert("Anda menggunakan akun alternate yang status nya Nonaktif, Silahkan Hubungi Tim Aplikasi");window.location="index"</script>';
+				exit;
+			}
 
-			echo '<script>alert("Akun Anda Sedang Login Di Device Lain atau Lupa Logout, Silahkan Hubungi Tim Aplikasi");window.location="index"</script>';
+			$data_login = array(
+				'id' => $row['id'],
+				'nama_lengkap' => $row['nama_lengkap'],
+				'level' => $row['level']
+			);
 
-		}else{ // jika user tidak sedang login, lanjut proses
+			$this->session->set_userdata('login_promemo',$data_login);
 
-			if($cek>0){	
-				$data_login = array(
-					'id' => $row['id'],
-					'nama_lengkap' => $row['nama_lengkap'],
-					'level' => $row['level']
-				);
-				$this->session->set_userdata($data_login);
+			// Ubah status jadi sedang login
+			$this->db->query("UPDATE tbl_user SET sedang_login='ya' WHERE id=$id_user");
 
-				// Ubah status jadi sedang login
-				$this->db->query("UPDATE tbl_user SET sedang_login='ya' WHERE id=$id_user");
-	
+			if($pwd == 'Profi@123'){
+				echo '<script>
+					alert("Untuk Keamanan, Silahkan Ganti Password Standar Anda");window.location="ke_ganti_password";
+				</script>';
+			}else{
 				echo '<script>
 					alert("Login Berhasil");window.location="ke_home";
 				</script>';
-	
-			}else{
-				echo '<script>
-					alert("Kombinasi Username & Password Yang Anda Masukkan Salah");window.location="../login";
-				</script>';
 			}
+			
 
+		}else{
+			echo '<script>
+				alert("Kombinasi Username & Password Yang Anda Masukkan Salah");window.location="../login";
+			</script>';
 		}
 
 		
@@ -75,7 +87,7 @@ class Login extends CI_Controller {
 		$id_user = $this->libraryku->tampil_user()->id;
 		$this->db->query("UPDATE tbl_user SET sedang_login='' WHERE id=$id_user");
 
-		$this->session->unset_userdata($data_login);
+		$this->session->unset_userdata('login_promemo', $data_login);
 		redirect('login');
 	}
 

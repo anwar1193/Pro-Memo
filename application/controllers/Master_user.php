@@ -15,12 +15,12 @@ class Master_user extends CI_Controller {
 		cek_belum_login();
         $data_user = $this->M_master->tampil_master_user()->result_array();
 
-		$this->load->view('header');
-		$this->load->view('sidebar');
-		$this->load->view('v_master_user', array(
+		$this->load->view('admin/header');
+		$this->load->view('admin/sidebar');
+		$this->load->view('admin/v_master_user', array(
             'data_user' => $data_user
         ));
-		$this->load->view('footer');
+		$this->load->view('admin/footer');
 	}
 
 	public function tambah_user(){
@@ -31,14 +31,14 @@ class Master_user extends CI_Controller {
 		$data_cabang = $this->M_master->tampil_data_order('tbl_cabang', 'nama_cabang')->result_array();
 		$data_departemen = $this->M_master->tampil_data_order('tbl_departemen', 'nama_departemen')->result_array();
 
-		$this->load->view('header');
-		$this->load->view('sidebar');
-		$this->load->view('v_tambah_user', array(
+		$this->load->view('admin/header');
+		$this->load->view('admin/sidebar');
+		$this->load->view('admin/v_tambah_user', array(
 			'data_level' => $data_level,
 			'data_cabang' => $data_cabang,
 			'data_departemen' => $data_departemen
 		));
-		$this->load->view('footer');
+		$this->load->view('admin/footer');
 	}
 
 	public function simpan_user(){
@@ -71,15 +71,15 @@ class Master_user extends CI_Controller {
 		$data_cabang = $this->M_master->tampil_data_order('tbl_cabang', 'nama_cabang')->result_array();
 		$data_departemen = $this->M_master->tampil_data_order('tbl_departemen', 'nama_departemen')->result_array();
 
-		$this->load->view('header');
-		$this->load->view('sidebar');
-		$this->load->view('v_edit_user', array(
+		$this->load->view('admin/header');
+		$this->load->view('admin/sidebar');
+		$this->load->view('admin/v_edit_user', array(
 			'data_user' => $data_user,
 			'data_level' => $data_level,
 			'data_cabang' => $data_cabang,
 			'data_departemen' => $data_departemen
 		));
-		$this->load->view('footer');
+		$this->load->view('admin/footer');
 	}
 
 

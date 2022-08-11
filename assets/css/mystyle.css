@@ -1,0 +1,18 @@
+.textJudul1{
+    font-family: 'Brush Script MT', cursive;
+}
+
+.textJudul2{
+    font-family: 'Brush Script MT', cursive;
+    color: red;
+}
+
+.textAbout{
+    font-size: 20px;
+    text-align: justify;
+}
+
+.garisAbout{
+    background-color: silver;
+    
+}

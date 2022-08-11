@@ -13,10 +13,10 @@ class Home extends CI_Controller {
 	public function index()
 	{
 		cek_belum_login();
-		$this->load->view('header');
-		$this->load->view('sidebar');
-		$this->load->view('v_home');
-		$this->load->view('footer');
+		$this->load->view('admin/header');
+		$this->load->view('admin/sidebar');
+		$this->load->view('admin/v_home');
+		$this->load->view('admin/footer');
 	}
 
 }
